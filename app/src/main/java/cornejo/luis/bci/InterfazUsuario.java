@@ -1,11 +1,12 @@
 package cornejo.luis.bci;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import cornejo.luis.bci.Clases.Servicio2Plano;
 
 public class InterfazUsuario extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class InterfazUsuario extends AppCompatActivity {
         Bienvenida.setText("Bienvenido "+letrero);
 
         Toast.makeText(InterfazUsuario.this,"Bienvenido",Toast.LENGTH_SHORT).show();
-        startService(new Intent(InterfazUsuario.this,Servicio2Plano.class));
+        startService(new Intent(InterfazUsuario.this, Servicio2Plano.class));
 
 
     }

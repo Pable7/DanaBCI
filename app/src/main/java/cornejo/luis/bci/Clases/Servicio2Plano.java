@@ -1,9 +1,11 @@
-package cornejo.luis.bci;
+package cornejo.luis.bci.Clases;
 
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
+
+import cornejo.luis.bci.R;
 
 public class Servicio2Plano extends Service
 {
@@ -15,7 +17,7 @@ public class Servicio2Plano extends Service
     }
     public int onStartCommand(Intent intent, int flag, int idProceso)
     {
-        mediaPlayer = MediaPlayer.create(this,R.raw.madre);
+        mediaPlayer = MediaPlayer.create(this, R.raw.madre);
         mediaPlayer.start();
         return START_STICKY;
     }

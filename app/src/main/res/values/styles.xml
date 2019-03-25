@@ -8,4 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.EditText" parent="android:Widget.EditText">
+        <item name="android:colorAccent">@color/colorBlanco</item>
+    </style>
+
+    <style name="AppTheme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorGris</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--Color del control cuando NO tiene enfoque-->
+        <item name="colorControlNormal">@color/colorGris</item>
+        <!--Color del control cuando tiene enfoque-->
+        <item name="colorControlActivated">@color/colorBlanco</item>
+    </style>
 </resources>
