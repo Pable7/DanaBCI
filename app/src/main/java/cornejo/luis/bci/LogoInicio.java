@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -13,6 +14,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import cornejo.luis.bci.Clases.CRestful;
 
 public class LogoInicio extends AppCompatActivity {
 
@@ -23,14 +27,14 @@ public class LogoInicio extends AppCompatActivity {
     private LinearLayout Ll_Data;
     private Handler handler;
     private int offset = 75;
-
+    private CRestful restful;
+    private boolean login;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo_inicio);
 
         initComponents();
         initAnimation();
-
         buttonConnection.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -54,6 +58,14 @@ public class LogoInicio extends AppCompatActivity {
                         break;
                 }
                 return false;
+            }
+        });
+        buttonConnection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restful = new CRestful(LogoInicio.this, "login", Txt_User.getText().toString(), Txt_Password.getText().toString());
+                restful.execute();
+                LogearseCorrecto();
             }
         });
     }
@@ -93,7 +105,7 @@ public class LogoInicio extends AppCompatActivity {
                 buttonConnection.setVisibility(View.VISIBLE);
                 Jbl_Loading.setVisibility(View.INVISIBLE);
             }
-        }, 1500);
+        }, 2500);
 
 
 
@@ -104,6 +116,25 @@ public class LogoInicio extends AppCompatActivity {
         animation.setStartOffset(offset);
         offset += + 75;
         return  animation;
+    }
+
+    private void LogearseCorrecto()
+    {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        login =  restful.getLogin();
+
+        Toast.makeText(LogoInicio.this, "login"+login,Toast.LENGTH_LONG).show();
+        if (login)
+        {
+            Intent intent =  new Intent(LogoInicio.this, InterfazUsuario.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 

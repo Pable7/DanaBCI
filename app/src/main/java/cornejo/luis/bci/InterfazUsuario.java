@@ -17,13 +17,13 @@ public class InterfazUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_interfaz_usuario);
 
         Bienvenida = (TextView) findViewById(R.id.Jbl_BienvenidoUsuario) ;
-        Bundle bundle = getIntent().getExtras();
+        //Bundle bundle = getIntent().getExtras();
 
-        letrero = bundle.getString("Usuario2");
-        Bienvenida.setText("Bienvenido "+letrero);
+        //letrero = bundle.getString("Usuario2");
+        Bienvenida.setText("Bienvenido ");
 
         Toast.makeText(InterfazUsuario.this,"Bienvenido",Toast.LENGTH_SHORT).show();
-        startService(new Intent(InterfazUsuario.this, Servicio2Plano.class));
+        //startService(new Intent(InterfazUsuario.this, Servicio2Plano.class));
 
 
     }
