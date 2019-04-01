@@ -1,7 +1,9 @@
 package cornejo.luis.bci;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -120,18 +122,25 @@ public class LogoInicio extends AppCompatActivity {
 
     private void LogearseCorrecto()
     {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        login =  restful.getLogin();
-        if (login)
-        {
-            Intent intent =  new Intent(LogoInicio.this, InterfazUsuario.class);
-            startActivity(intent);
-            finish();
-        }
+        final ProgressDialog progressDialog = new ProgressDialog(LogoInicio.this);;
+        progressDialog.setMessage("Autenticando...");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+                login =  restful.getLogin();
+                if (login)
+                {
+                    Intent intent =  new Intent(LogoInicio.this, InterfazUsuario.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        }, 3000);
     }
 
 

@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
 
     <Spinner
         android:id="@+id/muses_spinner"
@@ -9,30 +10,34 @@
         android:layout_height="60dp" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
         <Button
             android:id="@+id/refresh"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="@string/refresh" />
+            android:text="@string/refresh"
+            android:layout_margin="20px"/>
         <Button
             android:id="@+id/connect"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="@string/connect" />
+            android:text="@string/connect"
+            android:layout_margin="20px"/>
         <Button
             android:id="@+id/disconnect"
             android:layout_width="120dp"
             android:layout_height="40dp"
-            android:text="@string/disconnect" />
+            android:text="@string/disconnect"
+            android:layout_margin="20px"/>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="16sp"
+        android:textColor="#000"
         android:text="@string/status" />
     <TextView
         android:id="@+id/con_status"
@@ -40,12 +45,14 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="16sp"
+        android:textColor="#000"
         android:text="@string/undefined" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="16sp"
+        android:textColor="#000"
         android:text="@string/eeg" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,6 +65,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
         <TextView
             android:id="@+id/eeg_af7"
@@ -65,6 +74,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
         <TextView
             android:id="@+id/eeg_af8"
@@ -72,6 +83,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
         <TextView
             android:id="@+id/eeg_tp10"
@@ -79,6 +92,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
     </LinearLayout>
     <TextView
@@ -86,6 +101,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="16sp"
+        android:textColor="#000"
         android:text="@string/accel" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -98,6 +114,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
         <TextView
             android:id="@+id/acc_y"
@@ -105,6 +123,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
         <TextView
             android:id="@+id/acc_z"
@@ -112,6 +132,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
     </LinearLayout>
     <TextView
@@ -119,6 +141,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="16sp"
+        android:textColor="#000"
         android:text="@string/muse_elem" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -131,6 +154,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
         <TextView
             android:id="@+id/elem2"
@@ -138,6 +163,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
         <TextView
             android:id="@+id/elem3"
@@ -145,6 +172,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
         <TextView
             android:id="@+id/elem4"
@@ -152,6 +181,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
+            android:textColor="#000"
+            android:textAlignment="center"
             android:text="@string/init_val" />
     </LinearLayout>
     <TextView
@@ -159,6 +190,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="16sp"
+        android:textColor="#000"
         android:text="@string/version" />
     <TextView
         android:id="@+id/version"
@@ -166,11 +198,13 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="16sp"
+        android:textColor="#000"
         android:text="@string/undefined" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:gravity="center">
         <Button
             android:id="@+id/pause"
             android:layout_width="150dp"

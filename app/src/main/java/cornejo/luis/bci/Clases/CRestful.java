@@ -169,7 +169,6 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                     if(resul[0][1].toString().equals("ok"))
                     {
                         Log.i("Correcto","!!!");
-                        mensajes(context, "Correcto");
                     }
                     else
                         mensajes(context, "Verifica tus datos");
