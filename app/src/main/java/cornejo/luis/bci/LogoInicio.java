@@ -125,10 +125,7 @@ public class LogoInicio extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         login =  restful.getLogin();
-
-        Toast.makeText(LogoInicio.this, "login"+login,Toast.LENGTH_LONG).show();
         if (login)
         {
             Intent intent =  new Intent(LogoInicio.this, InterfazUsuario.class);
