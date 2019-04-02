@@ -3,6 +3,7 @@ package cornejo.luis.bci;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class LogoInicio extends AppCompatActivity {
     private Button buttonConnection;
     private EditText Txt_User, Txt_Password;
     private TextView Jbl_Loading;
-    private LinearLayout Ll_Data;
+    private LinearLayout Ll_Data, Ll_Inicio;
     private Handler handler;
     private int offset = 75;
     private CRestful restful;
@@ -65,9 +66,20 @@ public class LogoInicio extends AppCompatActivity {
         buttonConnection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                restful = new CRestful(LogoInicio.this, "login", Txt_User.getText().toString(), Txt_Password.getText().toString());
-                restful.execute();
-                LogearseCorrecto();
+                if( Txt_User.getText().toString().equals("") || Txt_User.getText().toString() == null)
+                {
+                    Snackbar.make(Ll_Inicio,"Ingrese un dato en usuario", Snackbar.LENGTH_LONG).show();
+                }
+                else if(Txt_Password.getText().toString().equals("") || Txt_Password.getText().toString() == null)
+                {
+                    Snackbar.make(Ll_Inicio,"Ingrese un dato en contraseña", Snackbar.LENGTH_LONG).show();
+                }
+                else
+                {
+                    restful = new CRestful(LogoInicio.this, "login", Txt_User.getText().toString(), Txt_Password.getText().toString());
+                    restful.execute();
+                    LogearseCorrecto();
+                }
             }
         });
     }
@@ -81,6 +93,7 @@ public class LogoInicio extends AppCompatActivity {
         Jbl_Loading = findViewById(R.id.Jbl_Cargando);
         Ll_Data =  findViewById(R.id.Ll_Datos);
         handler =  new Handler(getApplication().getMainLooper());
+        Ll_Inicio = findViewById(R.id.Ll_Inicio);
     }
     public void initAnimation()
     {
@@ -139,8 +152,12 @@ public class LogoInicio extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+                else
+                {
+                    Snackbar.make(Ll_Inicio, "Error: Verifique sus datos", Snackbar.LENGTH_LONG).show();
+                }
             }
-        }, 3000);
+        }, 1500);
     }
 
 

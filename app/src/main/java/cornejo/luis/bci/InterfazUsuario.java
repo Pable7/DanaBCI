@@ -5,22 +5,25 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.IntRange;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.choosemuse.libmuse.Accelerometer;
 import com.choosemuse.libmuse.AnnotationData;
@@ -50,11 +53,10 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import cornejo.luis.bci.Clases.Servicio2Plano;
-
 public class InterfazUsuario extends AppCompatActivity implements View.OnClickListener {
 
 
+    private LinearLayout Ll_Interfaz_Usuario;
     /**
      * Tag used for logging purposes.
      */
@@ -149,13 +151,15 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
     //--------------------------------------
     // Lifecycle / Connection code
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interfaz_usuario);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        Ll_Interfaz_Usuario = findViewById(R.id.Ll_Interfaz_Usuario);
 
         // We need to set the context on MuseManagerAndroid before we can do anything.
         // This must come before other LibMuse API calls as it also loads the library.
@@ -191,8 +195,6 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
         handler.post(tickUi);
 
     }
-
-
     protected void onPause() {
         super.onPause();
         // It is important to call stopListening when the Activity is paused
@@ -269,6 +271,27 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
                 dataTransmission = !dataTransmission;
                 muse.enableDataTransmission(dataTransmission);
             }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId())
+        {
+            case R.id.action_plus:
+                Snackbar.make(Ll_Interfaz_Usuario, "Agregar usuario", Snackbar.LENGTH_LONG).show();
+                return true;
+            case  R.id.action_settings:
+                Snackbar.make(Ll_Interfaz_Usuario, "Configuracion Datos", Snackbar.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

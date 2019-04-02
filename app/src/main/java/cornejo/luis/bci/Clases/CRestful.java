@@ -2,6 +2,7 @@ package cornejo.luis.bci.Clases;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     private Context context;
     private String info, nombre, password;
     private boolean login;
+    private double[] frecuencias;
+    private int idAccion;
 
     //Constructor para logearse
     public CRestful(Context context, String info, String nombre, String password) {
@@ -36,12 +39,23 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
+    public CRestful(Context context, String info, String nombre, double[] frecuencias, int idAccion){
+        this.context = context;
+        this.info = info;
+        this.nombre =  nombre;
+        this.frecuencias =  frecuencias;
+        this.idAccion = idAccion;
+        HTTP_RESTFUL = getURL(info);
+        Log.d("url","url:"+HTTP_RESTFUL);
+    }
 
     public String getURL(String info)
     {
         switch(info)
         {
             case "login": return url_p+"control.php?action=login&nombre="+nombre+"&password="+password;
+            case "registrar": return url_p+"control.php?action=insertar&nombre="+nombre+"&dato1="+frecuencias[0]+"&dato2="+
+                    frecuencias[1]+"&dato3="+frecuencias[2]+"&idaccion="+idAccion;
             default: return url_p+"control_p.php?action=error";// checar este metodo
         }
     }
@@ -98,25 +112,18 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                         case "login":
                             list3[0][0]=status;
                             list3[0][1]=row.getString("respuesta");
-                            Log.d("res","res:"+list3[0][0].toString());
-                            Log.d("res","res:"+list3[0][1].toString());
+                            Log.d("getRestful","res:"+list3[0][0].toString());
+                            Log.d("getRestful","res:"+list3[0][1].toString());
                             if (list3[0][1].toString().equals("ok"))
                             {
                                 this.login = true;
                             }
                             break;
-
-                        case "registro":
-                            list3[0][0]=status;
-                            list3[0][1]=row.getString("respuesta");
-                            //list3[i][0]=row.getString("registro");
-                            break;
                     }
                 }
                 return list3;
             }
-
-            if( status.equals("500") )
+            else if( status.equals("500") )
                 list3[0][0]="500";
             else
                 list3[0][0]="0";
@@ -159,8 +166,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     }
     @Override
     protected void onPostExecute(String resul[][]) {
-        Log.d("res","res:"+resul[0][0].toString());
-        Log.d("res","res:"+resul[0][1].toString());
+        Log.d("onPostExecute","res:"+resul[0][0].toString());
         if (resul[0][0].equals("50"))
         {
             switch (this.info)
@@ -168,13 +174,10 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                 case "login":
                     if(resul[0][1].toString().equals("ok"))
                     {
-                        Log.i("Correcto","!!!");
+                        mensajes(context,"Bienvenido");
                     }
                     else
                         mensajes(context, "Verifica tus datos");
-                    break;
-                case "registro":
-                    mensajes(context, "Tu registro fue exitoso");
                     break;
             }
         }
@@ -184,8 +187,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
             {
                 switch (this.info)
                 {
-                    case "registro":
-                        mensajes(context, "Error en el registro, verifique sus datos");
+                    case "login": //mensajes(context,"Error: Verifique sus datos de Sesion");
                         break;
                 }
             }

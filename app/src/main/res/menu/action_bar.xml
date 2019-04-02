@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="Herramientas"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_plus"
+        android:icon="@drawable/ic_plus_bar"
+        android:iconTint="#000"
+        android:title="Add"
+        android:orderInCategory="150"
+        app:showAsAction="always"
+        />
+
+
+
+</menu>
