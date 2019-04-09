@@ -24,8 +24,8 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     private String HTTP_RESTFUL;
     private String url_p="http://itqisc2019.com/Gatos/";
     private Context context;
-    private String info, nombre, password;
-    private boolean login;
+    private String info, nombre, password, dato, tabla, condicion, datoPeticion, valor;
+    private boolean login, actualizado, insertado;
     private double[] frecuencias;
     private int idAccion;
 
@@ -39,12 +39,38 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
+    //Contructor para las frecuencias
     public CRestful(Context context, String info, String nombre, double[] frecuencias, int idAccion){
         this.context = context;
         this.info = info;
         this.nombre =  nombre;
         this.frecuencias =  frecuencias;
         this.idAccion = idAccion;
+        this.insertado = false;
+        HTTP_RESTFUL = getURL(info);
+        Log.d("url","url:"+HTTP_RESTFUL);
+    }
+    //Constructor para recolectar un dato
+    public CRestful(Context context, String info, String dato, String tabla, String condicion)
+    {
+        this.context = context;
+        this.info = info;
+        this.dato = dato;
+        this.tabla = tabla;
+        this.condicion = condicion;
+        HTTP_RESTFUL = getURL(info);
+        Log.d("url","url:"+HTTP_RESTFUL);
+    }
+    //Constructor para actualizarse
+    public  CRestful(String info, String dato, String tabla, String condicion,String valor, Context context){
+
+        this.context = context;
+        this.info = info;
+        this.dato = dato;
+        this.tabla = tabla;
+        this.condicion = condicion;
+        this.valor = valor;
+        this.actualizado = false;
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
@@ -56,6 +82,8 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
             case "login": return url_p+"control.php?action=login&nombre="+nombre+"&password="+password;
             case "registrar": return url_p+"control.php?action=insertar&nombre="+nombre+"&dato1="+frecuencias[0]+"&dato2="+
                     frecuencias[1]+"&dato3="+frecuencias[2]+"&idaccion="+idAccion;
+            case "consultar": return url_p+"control.php?action=consultar&dato="+dato+"&condicion="+condicion+"&tabla="+tabla;
+            case "actualizar": return url_p+"control.php?action=actualizar&dato="+dato+"&condicion="+condicion+"&tabla="+tabla+"&valor="+valor;
             default: return url_p+"control_p.php?action=error";// checar este metodo
         }
     }
@@ -110,13 +138,34 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                     switch(this.info)
                     {
                         case "login":
-                            list3[0][0]=status;
+                            list3[0][0]= status;
                             list3[0][1]=row.getString("respuesta");
                             Log.d("getRestful","res:"+list3[0][0].toString());
                             Log.d("getRestful","res:"+list3[0][1].toString());
                             if (list3[0][1].toString().equals("ok"))
                             {
                                 this.login = true;
+                            }
+                            break;
+                        case "consultar":
+                            list3[0][0] =  status;
+                            list3[0][1] = row.getString("respuesta");
+                            this.datoPeticion = list3[0][1];
+                            break;
+                        case "actualizar":
+                            list3[0][0] =  status;
+                            list3[0][1] = row.getString("respuesta");
+                            if (list3[0][1].toString().equals("actualizado"))
+                            {
+                                this.actualizado = true;
+                            }
+                            break;
+                        case "registrar":
+                            list3[0][0] =  status;
+                            list3[0][1] = row.getString("respuesta");
+                            if (list3[0][1].toString().equals("insertado"))
+                            {
+                                this.insertado = true;
                             }
                             break;
                     }
@@ -174,7 +223,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                 case "login":
                     if(resul[0][1].toString().equals("ok"))
                     {
-                        mensajes(context,"Bienvenido");
+                        //mensajes(context,"Bienvenido");
                     }
                     else
                         mensajes(context, "Verifica tus datos");
@@ -187,7 +236,10 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
             {
                 switch (this.info)
                 {
-                    case "login": //mensajes(context,"Error: Verifique sus datos de Sesion");
+                    case "login":
+                    case "consultar":
+                    case "registrar":
+                    case "actualizar": mensajes(context,"Error en la Consulta\nVuelta a intentarlo");
                         break;
                 }
             }
@@ -202,4 +254,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     public boolean getLogin() {
         return this.login;
     }
+    public String getDatoPeticion() { return  this.datoPeticion; }
+    public boolean getInsertado() { return this.insertado; }
+    public boolean getActualizado() { return  this.actualizado; }
 }

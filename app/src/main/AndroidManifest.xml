@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".Perfil"></activity>
         <activity
             android:name=".LogoInicio"
             android:screenOrientation="portrait"
@@ -25,10 +26,9 @@
         </activity>
         <activity android:name=".InterfazUsuario" />
         <activity android:name=".InterfazRegistro" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
+
         <service android:name=".Clases.Servicio2Plano" />
-
     </application>
-
 
 </manifest>

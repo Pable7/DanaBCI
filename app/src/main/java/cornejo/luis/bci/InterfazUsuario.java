@@ -4,10 +4,12 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,12 +18,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -56,7 +56,8 @@ import java.util.concurrent.atomic.AtomicReference;
 public class InterfazUsuario extends AppCompatActivity implements View.OnClickListener {
 
 
-    private LinearLayout Ll_Interfaz_Usuario;
+    private CoordinatorLayout Ll_Interfaz_Usuario;
+    private String usuarioLogeado;
     /**
      * Tag used for logging purposes.
      */
@@ -159,7 +160,8 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Ll_Interfaz_Usuario = findViewById(R.id.Ll_Interfaz_Usuario);
+        usuarioLogeado = InterfazUsuario.this.getIntent().getExtras().getString("usuario");
+        Log.i("InterfazU",usuarioLogeado);
 
         // We need to set the context on MuseManagerAndroid before we can do anything.
         // This must come before other LibMuse API calls as it also loads the library.
@@ -210,14 +212,17 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
-        if (v.getId() == R.id.refresh) {
+        if (v.getId() == R.id.refresh)
+        {
             // The user has pressed the "Refresh" button.
             // Start listening for nearby or paired Muse headbands. We call stopListening
             // first to make sure startListening will clear the list of headbands and start fresh.
             manager.stopListening();
             manager.startListening();
 
-        } else if (v.getId() == R.id.connect) {
+        }
+        else if (v.getId() == R.id.connect)
+        {
 
             // The user has pressed the "Connect" button to connect to
             // the headband in the spinner.
@@ -254,7 +259,9 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
                 muse.runAsynchronously();
             }
 
-        } else if (v.getId() == R.id.disconnect) {
+        }
+        else if (v.getId() == R.id.disconnect)
+        {
 
             // The user has pressed the "Disconnect" button.
             // Disconnect from the selected Muse.
@@ -262,7 +269,9 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
                 muse.disconnect();
             }
 
-        } else if (v.getId() == R.id.pause) {
+        }
+        else if (v.getId() == R.id.pause)
+        {
 
             // The user has pressed the "Pause/Resume" button to either pause or
             // resume data transmission.  Toggle the state and pause or resume the
@@ -273,26 +282,30 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar, menu);
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId())
-        {
+        Intent intent;
+        switch (item.getItemId()){
             case R.id.action_plus:
-                Snackbar.make(Ll_Interfaz_Usuario, "Agregar usuario", Snackbar.LENGTH_LONG).show();
-                return true;
-            case  R.id.action_settings:
+                intent = new Intent(getApplicationContext(), Perfil.class);
+                Snackbar.make(Ll_Interfaz_Usuario, "Agregar Lectura", Snackbar.LENGTH_LONG).show();
+                break;
+            case R.id.action_settings:
+                intent = new Intent(getApplicationContext(), Perfil.class);
+                intent.putExtra("usuario", usuarioLogeado);
                 Snackbar.make(Ll_Interfaz_Usuario, "Configuracion Datos", Snackbar.LENGTH_LONG).show();
-                return true;
+                break;
             default:
-                return super.onOptionsItemSelected(item);
+                intent = null;
+                break;
         }
+        startActivity(intent);
+        return super.onOptionsItemSelected(item);
     }
 
     //--------------------------------------
@@ -482,6 +495,9 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
      * Initializes the UI of the example application.
      */
     private void initUI() {
+        //Linear Layout para SnackBar
+        Ll_Interfaz_Usuario = findViewById(R.id.Ll_Interfaz_Usuario);
+        //Botones con su Evento
         setContentView(R.layout.activity_interfaz_usuario);
         Button refreshButton = findViewById(R.id.refresh);
         refreshButton.setOnClickListener(this);
@@ -491,7 +507,7 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
         disconnectButton.setOnClickListener(this);
         Button pauseButton = findViewById(R.id.pause);
         pauseButton.setOnClickListener(this);
-
+        //Spinner
         spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         Spinner musesSpinner = (Spinner) findViewById(R.id.muses_spinner);
         musesSpinner.setAdapter(spinnerAdapter);

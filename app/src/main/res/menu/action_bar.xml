@@ -2,10 +2,9 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
         android:id="@+id/action_settings"
-        android:title="Herramientas"
+        android:title="Perfil"
         android:orderInCategory="100"
         app:showAsAction="never"/>
     <item
@@ -14,9 +13,5 @@
         android:iconTint="#000"
         android:title="Add"
         android:orderInCategory="150"
-        app:showAsAction="always"
-        />
-
-
-
+        app:showAsAction="always" />
 </menu>

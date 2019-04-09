@@ -23,4 +23,11 @@
         <!--Color del control cuando tiene enfoque-->
         <item name="colorControlActivated">@color/colorBlanco</item>
     </style>
+
+    <style name="AppTheme.White" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorBlanco</item>
+        <item name="colorPrimaryDark">@color/colorBlanco</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+    </style>
 </resources>

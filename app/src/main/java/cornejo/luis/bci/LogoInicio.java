@@ -149,6 +149,8 @@ public class LogoInicio extends AppCompatActivity {
                 if (login)
                 {
                     Intent intent =  new Intent(LogoInicio.this, InterfazUsuario.class);
+                    Log.i("Inicio",Txt_User.getText().toString());
+                    intent.putExtra("usuario",Txt_User.getText().toString());
                     startActivity(intent);
                     finish();
                 }
