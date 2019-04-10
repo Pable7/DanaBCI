@@ -2,8 +2,10 @@ package cornejo.luis.bci.Clases;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -28,10 +30,11 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     private boolean login, actualizado, insertado;
     private double[] frecuencias;
     private int idAccion;
+    private LinearLayout linearLayout;
 
     //Constructor para logearse
-    public CRestful(Context context, String info, String nombre, String password) {
-        this.context = context;
+    public CRestful(LinearLayout linearLayout, String info, String nombre, String password) {
+        this.linearLayout = linearLayout;
         this.info = info;
         this.nombre = nombre;
         this.password = password;
@@ -62,15 +65,15 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         Log.d("url","url:"+HTTP_RESTFUL);
     }
     //Constructor para actualizarse
-    public  CRestful(String info, String dato, String tabla, String condicion,String valor, Context context){
+    public  CRestful(String info, String dato, String tabla, String condicion, String valor, LinearLayout linearLayout){
 
-        this.context = context;
         this.info = info;
         this.dato = dato;
         this.tabla = tabla;
         this.condicion = condicion;
         this.valor = valor;
         this.actualizado = false;
+        this.linearLayout = linearLayout;
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
@@ -157,7 +160,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                             list3[0][1] = row.getString("respuesta");
                             if (list3[0][1].toString().equals("actualizado"))
                             {
-                                this.actualizado = true;
+                                mensajeSnack(linearLayout, "Cambio de contraseña exitoso");
                             }
                             break;
                         case "registrar":
@@ -166,6 +169,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                             if (list3[0][1].toString().equals("insertado"))
                             {
                                 this.insertado = true;
+                                //Implentar SnackBar
                             }
                             break;
                     }
@@ -226,7 +230,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                         //mensajes(context,"Bienvenido");
                     }
                     else
-                        mensajes(context, "Verifica tus datos");
+                        //mensajes(context, "Verifica tus datos");
                     break;
             }
         }
@@ -236,20 +240,23 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
             {
                 switch (this.info)
                 {
-                    case "login":
-                    case "consultar":
-                    case "registrar":
-                    case "actualizar": mensajes(context,"Error en la Consulta\nVuelta a intentarlo");
+                    case "login": break;
+                    case "consultar": break;
+                    case "registrar": break;
+                    case "actualizar": mensajeSnack(linearLayout, "Fallo al actualizar, comprueba conexcion");
                         break;
                 }
             }
             else
-                mensajes(context, "Ocurrio un error \n Verifique su conexión");
+                mensajeSnack(linearLayout, "Ocurrio un error: Verifique su conexión");
         }
     }
 
     public void mensajes (Context context, String mensaje) {
         Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show();
+    }
+    public void mensajeSnack(LinearLayout linearLayout, String mensaje){
+        Snackbar.make(linearLayout, mensaje, Snackbar.LENGTH_LONG).show();
     }
     public boolean getLogin() {
         return this.login;

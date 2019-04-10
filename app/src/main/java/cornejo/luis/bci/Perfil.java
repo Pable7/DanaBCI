@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,7 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
     private ImageView userImage;
     private int offset = 25;
     private Context context;
-    private  String usuarioLogeado;
+    private  String usuarioLogeado, contrasenaUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,39 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_perfil);
 
         usuarioLogeado = getIntent().getExtras().getString("usuario");
+        contrasenaUsuario = getIntent().getExtras().getString("contrasena");
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         initComponents();
         initAnimations();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_perfil, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.cerrar_sesion:
+                AlertDialog.Builder builder = new AlertDialog.Builder(Perfil.this);
+                builder.setTitle("¿Cerrar Sesión?")
+                        .setMessage("Está a punto de salir.")
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getApplicationContext(), LogoInicio.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cancelar", null)
+                        .create()
+                        .show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
     public void initComponents()
     {
@@ -91,31 +123,6 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         if(aumento) offset = offset + 25;
         return  animation;
     }
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_perfil, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.cerrar_sesion:
-                AlertDialog.Builder builder = new AlertDialog.Builder(Perfil.this);
-                builder.setTitle("¿Cerrar Sesión?")
-                        .setMessage("Está a punto de salir.")
-                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(getApplicationContext(), LogoInicio.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("Cancelar", null)
-                        .create()
-                        .show();
-                break;
-        }
-        return true;
-    }
 
     @Override
     public void onClick(View v) {
@@ -123,7 +130,7 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         {
             case R.id.campo_password:
                 DialogMenuCambioContrasena dialogMenuCambioContrasena =  new DialogMenuCambioContrasena();
-                dialogMenuCambioContrasena.getContent(this, (LinearLayout) findViewById(R.id.container_perfil));
+                dialogMenuCambioContrasena.getContent(this, (LinearLayout) findViewById(R.id.container_perfil), contrasenaUsuario, usuarioLogeado);
                 dialogMenuCambioContrasena.show(getSupportFragmentManager(),"Cambio Contrasena");
                 break;
         }

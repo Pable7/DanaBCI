@@ -76,7 +76,7 @@ public class LogoInicio extends AppCompatActivity {
                 }
                 else
                 {
-                    restful = new CRestful(LogoInicio.this, "login", Txt_User.getText().toString(), Txt_Password.getText().toString());
+                    restful = new CRestful(Ll_Inicio, "login", Txt_User.getText().toString(), Txt_Password.getText().toString());
                     restful.execute();
                     LogearseCorrecto();
                 }
@@ -148,9 +148,10 @@ public class LogoInicio extends AppCompatActivity {
                 login =  restful.getLogin();
                 if (login)
                 {
-                    Intent intent =  new Intent(LogoInicio.this, InterfazUsuario.class);
+                    Intent intent =  new Intent(LogoInicio.this, Perfil.class);
                     Log.i("Inicio",Txt_User.getText().toString());
                     intent.putExtra("usuario",Txt_User.getText().toString());
+                    intent.putExtra("contrasnea",Txt_Password.getText().toString());
                     startActivity(intent);
                     finish();
                 }

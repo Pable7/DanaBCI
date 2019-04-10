@@ -53,11 +53,13 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import cornejo.luis.bci.Dialogs.DialogControlValores;
+
 public class InterfazUsuario extends AppCompatActivity implements View.OnClickListener {
 
 
     private CoordinatorLayout Ll_Interfaz_Usuario;
-    private String usuarioLogeado;
+    private String usuarioLogeado, contrasenaUsuario;
     /**
      * Tag used for logging purposes.
      */
@@ -157,11 +159,9 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interfaz_usuario);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         usuarioLogeado = InterfazUsuario.this.getIntent().getExtras().getString("usuario");
-        Log.i("InterfazU",usuarioLogeado);
+        contrasenaUsuario = InterfazUsuario.this.getIntent().getExtras().getString("contrasena");
+        Log.i("InterfazU",usuarioLogeado+" "+contrasenaUsuario);
 
         // We need to set the context on MuseManagerAndroid before we can do anything.
         // This must come before other LibMuse API calls as it also loads the library.
@@ -196,6 +196,34 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
         // Start our asynchronous updates of the UI.
         handler.post(tickUi);
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()){
+            case R.id.action_plus:
+                DialogControlValores dialogControlValores = new DialogControlValores();
+                dialogControlValores.getContent(this, Ll_Interfaz_Usuario);
+                dialogControlValores.show(getSupportFragmentManager(), "Control Valores");
+                Snackbar.make(Ll_Interfaz_Usuario, "Agregar Lectura", Snackbar.LENGTH_LONG).show();
+                break;
+            case R.id.action_settings:
+                /*intent = new Intent(getApplicationContext(), Perfil.class);
+                intent.putExtra("usuario", usuarioLogeado);
+                intent.putExtra("contrasena",contrasenaUsuario);*/
+                Snackbar.make(Ll_Interfaz_Usuario, "Configuracion Datos", Snackbar.LENGTH_LONG).show();
+                break;
+            default:
+                intent = null;
+                break;
+        }
+        //startActivity(intent);
+        return super.onOptionsItemSelected(item);
     }
     protected void onPause() {
         super.onPause();
@@ -281,31 +309,6 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
                 muse.enableDataTransmission(dataTransmission);
             }
         }
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_principal, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()){
-            case R.id.action_plus:
-                intent = new Intent(getApplicationContext(), Perfil.class);
-                Snackbar.make(Ll_Interfaz_Usuario, "Agregar Lectura", Snackbar.LENGTH_LONG).show();
-                break;
-            case R.id.action_settings:
-                intent = new Intent(getApplicationContext(), Perfil.class);
-                intent.putExtra("usuario", usuarioLogeado);
-                Snackbar.make(Ll_Interfaz_Usuario, "Configuracion Datos", Snackbar.LENGTH_LONG).show();
-                break;
-            default:
-                intent = null;
-                break;
-        }
-        startActivity(intent);
-        return super.onOptionsItemSelected(item);
     }
 
     //--------------------------------------

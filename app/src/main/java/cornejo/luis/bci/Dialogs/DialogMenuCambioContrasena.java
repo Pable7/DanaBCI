@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import cornejo.luis.bci.Clases.CRestful;
 import cornejo.luis.bci.R;
 
 public class DialogMenuCambioContrasena extends AppCompatDialogFragment {
@@ -21,11 +22,14 @@ public class DialogMenuCambioContrasena extends AppCompatDialogFragment {
     private Context context;
     private DialogMenuCambioContrasena listener;
     private LinearLayout Perfil;
+    private String contrasenaVieja, usuario;
 
-    public void getContent(Context context, LinearLayout container){
+    public void getContent(Context context, LinearLayout container, String contrasenaVieja, String usuario){
         Snackbar.make(container, "Asegurese de tener conexión a Internet", Snackbar.LENGTH_LONG).show();
-        this.Perfil = container;
         this.context = context;
+        this.Perfil = container;
+        this.contrasenaVieja = contrasenaVieja;
+        this.usuario = usuario;
     }
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -38,14 +42,14 @@ public class DialogMenuCambioContrasena extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if (!viejaContrasena.getText().toString().equals("Contraseña vieja"))// Jalar contraseña vieja
+                        if (!viejaContrasena.getText().toString().equals(contrasenaVieja))
                             Snackbar.make(Perfil, "Error: Contraseña actual no coincide",Snackbar.LENGTH_LONG).show();
                         else if(!nuevaContrasena.getText().toString().equals(confirmarNuevaContrasena.getText().toString()))
                             Snackbar.make(Perfil, "Error: Contraseñas nuevas no coinciden",Snackbar.LENGTH_SHORT).show();
                         else
                         {
-                            final String newPass = nuevaContrasena.getText().toString();
-                            Snackbar.make(Perfil, "Cambio de contraseña Exitoso!", Snackbar.LENGTH_LONG).show();
+                            CRestful cRestful = new CRestful("actualizar", "contrasena", "Usuarios", usuario, nuevaContrasena.getText().toString(), Perfil);
+                            cRestful.execute();
                         }
                     }
                 });
