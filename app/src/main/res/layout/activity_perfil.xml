@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container_perfil"
     android:layout_width="match_parent"
@@ -8,35 +7,22 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:background="@color/colorBlanco"
-    tools:context=".Perfil">
+    android:animateLayoutChanges="true"
+    tools:context=".Activities.Perfil">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarUserProfile"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:elevation="0dp"
-        android:background="@color/colorTransparente"
-        android:theme="@style/AppTheme.White">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text=" "
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorPrimary"
-            android:textSize="19sp"
-            android:textStyle="bold" />
-
-    </android.support.v7.widget.Toolbar>
+    <include
+        android:id="@+id/toolbarPerfil"
+        layout="@layout/toolbar">
+    </include>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10sp"
         android:background="@color/colorBlanco"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        >
 
         <ImageView
             android:id="@+id/profileImage"

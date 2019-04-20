@@ -1,9 +1,8 @@
-package cornejo.luis.bci;
+package cornejo.luis.bci.Activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cornejo.luis.bci.Dialogs.DialogMenuCambioContrasena;
+import cornejo.luis.bci.R;
 
 public class Perfil extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,20 +39,21 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        usuarioLogeado = getIntent().getExtras().getString("usuario");
-        contrasenaUsuario = getIntent().getExtras().getString("contrasena");
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarPerfil);
         setSupportActionBar(toolbar);
 
         initComponents();
         initAnimations();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_perfil, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.cerrar_sesion:
@@ -74,8 +75,11 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void initComponents()
     {
+        //usuarioLogeado = getIntent().getExtras().getString("usuario");
+        //contrasenaUsuario = getIntent().getExtras().getString("contrasena");
         completeUserName = findViewById(R.id.profileUsername);
         userName = findViewById(R.id.profileAlias);
         userImage = findViewById(R.id.profileImage);
@@ -93,6 +97,8 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void initAnimations(){
+        Ll_Perfil = findViewById(R.id.container_perfil);
+
         completeUserName.setVisibility(View.INVISIBLE);
         userName.setVisibility(View.INVISIBLE);
         userImage.setVisibility(View.INVISIBLE);
@@ -130,7 +136,7 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         {
             case R.id.campo_password:
                 DialogMenuCambioContrasena dialogMenuCambioContrasena =  new DialogMenuCambioContrasena();
-                dialogMenuCambioContrasena.getContent(this, (LinearLayout) findViewById(R.id.container_perfil), contrasenaUsuario, usuarioLogeado);
+                dialogMenuCambioContrasena.getContent(this, Ll_Perfil, contrasenaUsuario, usuarioLogeado);
                 dialogMenuCambioContrasena.show(getSupportFragmentManager(),"Cambio Contrasena");
                 break;
         }

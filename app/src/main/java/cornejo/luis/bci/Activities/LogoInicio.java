@@ -1,10 +1,9 @@
-package cornejo.luis.bci;
+package cornejo.luis.bci.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +16,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import cornejo.luis.bci.Clases.CRestful;
+import cornejo.luis.bci.R;
 
 public class LogoInicio extends AppCompatActivity {
 
@@ -148,10 +147,10 @@ public class LogoInicio extends AppCompatActivity {
                 login =  restful.getLogin();
                 if (login)
                 {
-                    Intent intent =  new Intent(LogoInicio.this, Perfil.class);
+                    Intent intent =  new Intent(LogoInicio.this, Principal.class);
                     Log.i("Inicio",Txt_User.getText().toString());
                     intent.putExtra("usuario",Txt_User.getText().toString());
-                    intent.putExtra("contrasnea",Txt_Password.getText().toString());
+                    intent.putExtra("contrasena",Txt_Password.getText().toString());
                     startActivity(intent);
                     finish();
                 }

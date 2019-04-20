@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import cornejo.luis.bci.R;
@@ -20,17 +21,17 @@ public class DialogControlValores extends AppCompatDialogFragment {
     private SeekBar volumen, brillo;
     private DialogControlValores listener;
     private Context context;
-    private CoordinatorLayout linearLayout;
+    private LinearLayout linearLayout;
     private AudioManager audioManager;
 
-    public void getContent(Context context, CoordinatorLayout linearLayout)
+    public void getContent(Context context, LinearLayout linearLayout)
     {
         Snackbar.make(linearLayout, "Control de Acciones", Snackbar.LENGTH_LONG).show();
         this.context = context;
         this.linearLayout = linearLayout;
 
     }
-    public Dialog onCreDialog(Bundle savedInstanceState)
+    public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
