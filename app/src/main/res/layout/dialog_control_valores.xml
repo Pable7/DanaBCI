@@ -3,35 +3,50 @@
     android:id="@+id/Ll_Control"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/Jbl_Brillo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Control Brillo"
-        android:textSize="30dp"
-        android:textColor="#000"
-        android:layout_marginBottom="30px"/>
-
-    <android.support.v7.widget.AppCompatSeekBar
-        android:id="@+id/SkBr_Brillo"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30px"/>
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/Jbl_Volumen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Control Volumen"
-        android:textSize="30dp"
-        android:textColor="#000"
-        android:layout_marginBottom="30px"/>
-    <SeekBar
-        android:id="@+id/SkBr_Volumen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/Jbl_Brillo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Control Brillo"
+            android:textSize="18dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="30px"/>
+
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/SkBr_Brillo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:id="@+id/Jbl_Volumen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Control Volumen"
+            android:textSize="18dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="30px"/>
+        <SeekBar
+            android:id="@+id/SkBr_Volumen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
 </LinearLayout>

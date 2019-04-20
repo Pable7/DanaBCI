@@ -32,7 +32,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     private int idAccion;
     private LinearLayout linearLayout;
 
-    //Constructor para logearse
+    //Constructor para logearse//
     public CRestful(LinearLayout linearLayout, String info, String nombre, String password) {
         this.linearLayout = linearLayout;
         this.info = info;
@@ -42,7 +42,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
-    //Contructor para las frecuencias
+    //Contructor para guardar las frecuencias//
     public CRestful(Context context, String info, String nombre, double[] frecuencias, int idAccion){
         this.context = context;
         this.info = info;
@@ -53,7 +53,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
-    //Constructor para recolectar un dato
+    //Constructor para recolectar un dato//
     public CRestful(Context context, String info, String dato, String tabla, String condicion)
     {
         this.context = context;
@@ -64,7 +64,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
-    //Constructor para actualizarse
+    //Constructor para actualizarse//
     public  CRestful(String info, String dato, String tabla, String condicion, String valor, LinearLayout linearLayout){
 
         this.info = info;

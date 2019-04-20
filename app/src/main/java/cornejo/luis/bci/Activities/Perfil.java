@@ -65,6 +65,7 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(getApplicationContext(), LogoInicio.class);
                                 startActivity(intent);
+                                //Un finish que cierre completamente la app
                                 finish();
                             }
                         })
@@ -78,8 +79,8 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
 
     public void initComponents()
     {
-        //usuarioLogeado = getIntent().getExtras().getString("usuario");
-        //contrasenaUsuario = getIntent().getExtras().getString("contrasena");
+        usuarioLogeado = getIntent().getExtras().getString("usuario");
+        contrasenaUsuario = getIntent().getExtras().getString("contrasena");
         completeUserName = findViewById(R.id.profileUsername);
         userName = findViewById(R.id.profileAlias);
         userImage = findViewById(R.id.profileImage);
@@ -136,7 +137,7 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         {
             case R.id.campo_password:
                 DialogMenuCambioContrasena dialogMenuCambioContrasena =  new DialogMenuCambioContrasena();
-                dialogMenuCambioContrasena.getContent(this, Ll_Perfil, contrasenaUsuario, usuarioLogeado);
+                dialogMenuCambioContrasena.getContent(context, Ll_Perfil, contrasenaUsuario, usuarioLogeado);
                 dialogMenuCambioContrasena.show(getSupportFragmentManager(),"Cambio Contrasena");
                 break;
         }

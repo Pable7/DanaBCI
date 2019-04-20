@@ -54,6 +54,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import cornejo.luis.bci.Dialogs.DialogCargaDatos;
 import cornejo.luis.bci.Dialogs.DialogControlValores;
 import cornejo.luis.bci.R;
 
@@ -93,15 +94,13 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
 
         initComponents();
 
-        Snackbar.make(ll_principal, "holis", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(ll_principal, "Welcome " + usuarioLogeado, Snackbar.LENGTH_LONG).show();
 
         manager = MuseManagerAndroid.getInstance();
         manager.setContext(this);
         Log.i(TAG, "LibMuse version=" + LibmuseVersion.instance().getString());
 
-        WeakReference<Principal> weakActivity =
-                new WeakReference<Principal>(Principal.this);
-
+        WeakReference<Principal> weakActivity = new WeakReference<Principal>(Principal.this);
         ConnectionListener connectionListener = new ConnectionListener(weakActivity);
         DataListener dataListener = new DataListener(weakActivity);
         manager.setMuseListener(new MuseL(weakActivity));
@@ -110,10 +109,6 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         fileThread.start();
 
         handler.post(tickUi);
-
-        Snackbar.make(ll_principal, "adios", Snackbar.LENGTH_LONG).show();
-
-
     }
     private void initComponents(){
         ll_principal = findViewById(R.id.Ll_Principal);
@@ -122,7 +117,6 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         contrasenaUsuario = Principal.this.getIntent().getExtras().getString("contrasena");
         Log.i("PrincipalU",usuarioLogeado+" "+contrasenaUsuario);
         //Botones con su Evento
-        setContentView(R.layout.activity_principal);
         Button refreshButton = findViewById(R.id.refresh);
         refreshButton.setOnClickListener(this);
         Button connectButton = findViewById(R.id.connect);
@@ -157,6 +151,9 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
                 break;
             case R.id.action_plus:
                 Snackbar.make(ll_principal, "Agregar", Snackbar.LENGTH_LONG).show();
+                DialogCargaDatos dialogCargaDatos = new DialogCargaDatos();
+                dialogCargaDatos.getContent(this, ll_principal, usuarioLogeado);
+                dialogCargaDatos.show(getSupportFragmentManager(), "Carga datos");
                 break;
             case R.id.action_valores:
                 Snackbar.make(ll_principal, "Valores", Snackbar.LENGTH_LONG).show();
@@ -183,7 +180,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
             case R.id.refresh:
                 manager.stopListening();
                 manager.startListening();
-                Toast.makeText(this, "Refresh Buttom", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(ll_principal, "Refresh Buttom", Snackbar.LENGTH_LONG).show();
                 break;
             case R.id.connect:
                 Snackbar.make(ll_principal, "Connect Buttom", Snackbar.LENGTH_LONG).show();
