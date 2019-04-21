@@ -42,6 +42,8 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
 
         Toolbar toolbar = findViewById(R.id.toolbarPerfil);
         setSupportActionBar(toolbar);
+        //Accion flecha atras, configurar en mainfest//
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initComponents();
         initAnimations();

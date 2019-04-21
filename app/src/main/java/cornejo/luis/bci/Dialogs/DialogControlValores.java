@@ -5,13 +5,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import cornejo.luis.bci.R;
@@ -19,9 +17,8 @@ import cornejo.luis.bci.R;
 public class DialogControlValores extends AppCompatDialogFragment {
 
     private SeekBar volumen, brillo;
-    private DialogControlValores listener;
     private Context context;
-    private LinearLayout linearLayout;
+    private LinearLayout linearLayout, linearLayoutDialog;
     private AudioManager audioManager;
 
     public void getContent(Context context, LinearLayout linearLayout)
@@ -42,7 +39,7 @@ public class DialogControlValores extends AppCompatDialogFragment {
 
         volumen = view.findViewById(R.id.SkBr_Volumen);
         brillo =  view.findViewById(R.id.SkBr_Brillo);
-        linearLayout = view.findViewById(R.id.Ll_Control);
+        linearLayoutDialog = view.findViewById(R.id.Ll_Control);
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         volumen.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         volumen.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));

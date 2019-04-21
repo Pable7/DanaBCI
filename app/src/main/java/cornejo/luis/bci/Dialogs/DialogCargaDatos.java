@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -22,7 +23,7 @@ import cornejo.luis.bci.R;
 public class DialogCargaDatos  extends AppCompatDialogFragment {
 
     private Context context;
-    private LinearLayout linearLayout;
+    private LinearLayout linearLayout, linearLayoutDatos;
     private ProgressBar progressBar;
     private TextView textView, avisos;
     private double lecturas[] =  new double[9];
@@ -35,7 +36,7 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
         this.linearLayout = linearLayout;
         this.usuarioLogeado = usuarioLogeado;
     }
-    public Dialog onCreateDialog(){
+    public Dialog onCreateDialog(Bundle savedInstanceState){
         Snackbar.make(linearLayout, "Carga de datos", Snackbar.LENGTH_LONG);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
@@ -64,10 +65,12 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
         textView = view.findViewById(R.id.Jbl_cargaDatos);
         button = view.findViewById(R.id.Btn_registrar);
         avisos = view.findViewById(R.id.Jbl_Aviso);
+        linearLayoutDatos = view.findViewById(R.id.Ll_CargaDatos);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try
+                Snackbar.make(linearLayoutDatos, "Click", Snackbar.LENGTH_SHORT).show();
+                /*try
                 {
                     for (int i = 0; i < lecturas.length ; i++)
                     {
@@ -89,7 +92,7 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
                 catch (ArrayIndexOutOfBoundsException kiwi)
                 {
                     avisos.setText("Maximo de Datos Guardado");
-                }
+                }*/
             }
         });
 
