@@ -112,7 +112,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
             httpURLConnection.connect();
 
             InputStream inputStream = httpURLConnection.getInputStream();
-            Log.i("Input",String.valueOf(inputStream));
+            //Log.i("Input",String.valueOf(inputStream));
             jsonResult = inputStreamToString(inputStream).toString();//response.getEntity().getContent()).toString();
             Log.i("Input jason",String.valueOf(jsonResult));
             int pos = jsonResult.indexOf('{');
@@ -243,7 +243,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                     case "login": break;
                     case "consultar": break;
                     case "registrar": break;
-                    case "actualizar": mensajeSnack(linearLayout, "Fallo al actualizar, comprueba conexcion");
+                    case "actualizar": mensajeSnack(linearLayout, "Fallo al actualizar, compruebe sus datos");
                         break;
                 }
             }
