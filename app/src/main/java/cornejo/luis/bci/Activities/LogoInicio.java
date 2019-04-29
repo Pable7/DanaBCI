@@ -18,9 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import cornejo.luis.bci.Clases.CRestful;
+import cornejo.luis.bci.Clases.ParentActivity;
 import cornejo.luis.bci.R;
 
-public class LogoInicio extends AppCompatActivity {
+public class LogoInicio extends AppCompatActivity{
 
     private ProgressBar progressBarSplash;
     private Button buttonConnection;
@@ -93,6 +94,9 @@ public class LogoInicio extends AppCompatActivity {
         Ll_Data =  findViewById(R.id.Ll_Datos);
         handler =  new Handler(getApplication().getMainLooper());
         Ll_Inicio = findViewById(R.id.Ll_Inicio);
+
+        ParentActivity parentActivity = new ParentActivity();
+        parentActivity.addActiviy(LogoInicio.this);
     }
     public void initAnimation()
     {

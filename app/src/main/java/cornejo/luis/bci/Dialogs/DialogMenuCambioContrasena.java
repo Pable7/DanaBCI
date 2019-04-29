@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import cornejo.luis.bci.Clases.CRestful;
+import cornejo.luis.bci.Clases.ParentActivity;
 import cornejo.luis.bci.R;
 
 public class DialogMenuCambioContrasena extends AppCompatDialogFragment {
@@ -48,8 +50,20 @@ public class DialogMenuCambioContrasena extends AppCompatDialogFragment {
                             Snackbar.make(Perfil, "Error: Contraseñas nuevas no coinciden",Snackbar.LENGTH_SHORT).show();
                         else
                         {
-                            CRestful cRestful = new CRestful("actualizar", "contrasena", "Usuarios", usuario, nuevaContrasena.getText().toString(), Perfil);
+                            final CRestful cRestful = new CRestful("actualizar", "contrasena", "Usuarios", usuario, nuevaContrasena.getText().toString(), Perfil);
                             cRestful.execute();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Se destruyen todas la Actividades para la recarga de la contraseña//
+                                    if (cRestful.getActualizado())
+                                    {
+                                        ParentActivity parentActivity = new ParentActivity();
+                                        parentActivity.destroyActivies();
+                                    }
+
+                                }
+                            }, 1500);
                         }
                     }
                 });

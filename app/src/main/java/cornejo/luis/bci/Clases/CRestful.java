@@ -43,12 +43,13 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         Log.d("url","url:"+HTTP_RESTFUL);
     }
     //Contructor para guardar las frecuencias//
-    public CRestful(Context context, String info, String nombre, double[] frecuencias, int idAccion){
+    public CRestful(Context context, String info, String nombre, double[] frecuencias, int idAccion, LinearLayout linearLayout){
         this.context = context;
         this.info = info;
         this.nombre =  nombre;
         this.frecuencias =  frecuencias;
         this.idAccion = idAccion;
+        this.linearLayout = linearLayout;
         this.insertado = false;
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
@@ -83,7 +84,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         switch(info)
         {
             case "login": return url_p+"control.php?action=login&nombre="+nombre+"&password="+password;
-            case "registrar": return url_p+"control.php?action=insertar&nombre="+nombre+"&dato1="+frecuencias[0]+"&dato2="+
+            case "insertar": return url_p+"control.php?action=insertar&nombre="+nombre+"&dato1="+frecuencias[0]+"&dato2="+
                     frecuencias[1]+"&dato3="+frecuencias[2]+"&idaccion="+idAccion;
             case "consultar": return url_p+"control.php?action=consultar&dato="+dato+"&condicion="+condicion+"&tabla="+tabla;
             case "actualizar": return url_p+"control.php?action=actualizar&dato="+dato+"&condicion="+condicion+"&tabla="+tabla+"&valor="+valor;
@@ -161,14 +162,16 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                             if (list3[0][1].toString().equals("actualizado"))
                             {
                                 mensajeSnack(linearLayout, "Cambio de contraseña exitoso");
+                                this.actualizado = true;
                             }
                             break;
-                        case "registrar":
+                        case "insertar":
                             list3[0][0] =  status;
                             list3[0][1] = row.getString("respuesta");
                             if (list3[0][1].toString().equals("insertado"))
                             {
                                 this.insertado = true;
+                                mensajeSnack(linearLayout, "Datos insertados correctamente");
                                 //Implentar SnackBar
                             }
                             break;
@@ -242,7 +245,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                 {
                     case "login": break;
                     case "consultar": break;
-                    case "registrar": break;
+                    case "insertar": break;
                     case "actualizar": mensajeSnack(linearLayout, "Fallo al actualizar, compruebe sus datos");
                         break;
                 }

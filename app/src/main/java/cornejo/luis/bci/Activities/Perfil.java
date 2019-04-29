@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cornejo.luis.bci.Clases.ParentActivity;
 import cornejo.luis.bci.Dialogs.DialogMenuCambioContrasena;
 import cornejo.luis.bci.R;
 
@@ -97,6 +98,9 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         context = Perfil.this;
 
         userName.setText(usuarioLogeado);
+        //Agregar Activiy//
+        ParentActivity parentActivity = new ParentActivity();
+        parentActivity.addActiviy(Perfil.this);
     }
 
     private void initAnimations(){

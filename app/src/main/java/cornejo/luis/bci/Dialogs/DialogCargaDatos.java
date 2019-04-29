@@ -29,7 +29,7 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
     private double lecturas[] =  new double[9];
     private String usuarioLogeado;
     private Button button;
-    private int cont;
+    private int cont, progreso = 0;
 
     public void getContent(Context context, LinearLayout linearLayout, String usuarioLogeado){
         this.context = context;
@@ -48,7 +48,7 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Si los datos se suben correctamente, si el metodo Rest devuelve un true//
-                        final CRestful cRestful = new CRestful(context, "registrar", usuarioLogeado, lecturas, 1 ); //checar el idAccion//
+                        final CRestful cRestful = new CRestful(context, "insertar", usuarioLogeado, lecturas, 1, linearLayout ); //checar el idAccion//
                         cRestful.execute();
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -61,7 +61,7 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
                         }, 1500);
                     }
                 });
-        progressBar = view.findViewById(R.id.progress_cargaDatos);
+        progressBar = view.findViewById(R.id.progressBar);
         textView = view.findViewById(R.id.Jbl_cargaDatos);
         button = view.findViewById(R.id.Btn_registrar);
         avisos = view.findViewById(R.id.Jbl_Aviso);
@@ -70,6 +70,15 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
             @Override
             public void onClick(View v) {
                 Snackbar.make(linearLayoutDatos, "Click", Snackbar.LENGTH_SHORT).show();
+                if(progreso == 90)
+                {
+                    avisos.setText("Maximo de datos guardados");
+                }
+                else
+                {
+                    progreso += 10;
+                    progressBar.setProgress(progreso);
+                }
                 /*try
                 {
                     for (int i = 0; i < lecturas.length ; i++)

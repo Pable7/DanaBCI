@@ -54,6 +54,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import cornejo.luis.bci.Clases.ParentActivity;
 import cornejo.luis.bci.Dialogs.DialogCargaDatos;
 import cornejo.luis.bci.Dialogs.DialogControlValores;
 import cornejo.luis.bci.R;
@@ -116,7 +117,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         usuarioLogeado = Principal.this.getIntent().getExtras().getString("usuario");
         contrasenaUsuario = Principal.this.getIntent().getExtras().getString("contrasena");
         Log.i("PrincipalU",usuarioLogeado+" "+contrasenaUsuario);
-        //Botones con su Evento
+        //Botones con su Evento//
         Button refreshButton = findViewById(R.id.refresh);
         refreshButton.setOnClickListener(this);
         Button connectButton = findViewById(R.id.connect);
@@ -125,10 +126,13 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         disconnectButton.setOnClickListener(this);
         Button pauseButton = findViewById(R.id.pause);
         pauseButton.setOnClickListener(this);
-        //Spinner
+        //Spinner//
         spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         Spinner musesSpinner = findViewById(R.id.muses_spinner);
         musesSpinner.setAdapter(spinnerAdapter);
+        //Agregar actividad//
+        ParentActivity parentActivity = new ParentActivity();
+        parentActivity.addActiviy(Principal.this);
     }
 
 
