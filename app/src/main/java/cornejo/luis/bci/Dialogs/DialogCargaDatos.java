@@ -76,8 +76,7 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
                 }
                 else
                 {
-                    progreso += 10;
-                    progressBar.setProgress(progreso);
+                    progressBar.setProgress(progressBar.getProgress() + 10);
                 }
                 /*try
                 {
