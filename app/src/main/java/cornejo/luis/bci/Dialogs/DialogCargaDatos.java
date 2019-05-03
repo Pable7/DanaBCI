@@ -62,6 +62,7 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
                     }
                 });
         progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setProgress(0);
         textView = view.findViewById(R.id.Jbl_cargaDatos);
         button = view.findViewById(R.id.Btn_registrar);
         avisos = view.findViewById(R.id.Jbl_Aviso);
