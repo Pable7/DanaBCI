@@ -114,5 +114,25 @@
                 android:textStyle="bold"/>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/titleProfilePhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5sp"
+            android:text="Teléfono"
+            android:textColor="@color/colorGris"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/profilePhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:drawableLeft="@drawable/ic_local_phone"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:drawablePadding="15sp"
+            android:text="4422456565"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

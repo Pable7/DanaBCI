@@ -3,8 +3,10 @@ package cornejo.luis.bci.Activities;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Handler;
@@ -54,6 +56,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import cornejo.luis.bci.Clases.CRestful;
 import cornejo.luis.bci.Clases.ParentActivity;
 import cornejo.luis.bci.Dialogs.DialogCargaDatos;
 import cornejo.luis.bci.Dialogs.DialogControlValores;
@@ -62,6 +65,8 @@ import cornejo.luis.bci.R;
 public class Principal extends AppCompatActivity implements View.OnClickListener {
 
     //<---------Variables Globales--------->//
+    //SharedPreferences//
+    private SharedPreferences sharedPreferences;
     //Layout Principal//
     private LinearLayout ll_principal, ll_muse;
     //Para saber quien esta loggeado//
@@ -96,6 +101,12 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         initComponents();
 
         Snackbar.make(ll_principal, "Welcome " + usuarioLogeado, Snackbar.LENGTH_LONG).show();
+        //Obtener ID Usuario//
+        guardarIdUsuarioPreferences();
+        //Obtener Telefono//
+        guardarTelefonoPreferences();
+        //Obtener Frecuencias//
+        guardarFrencuenciasPreferences();
 
         manager = MuseManagerAndroid.getInstance();
         manager.setContext(this);
@@ -112,10 +123,12 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         handler.post(tickUi);
     }
     private void initComponents(){
+        sharedPreferences = getSharedPreferences("Datos", Context.MODE_PRIVATE);
+
         ll_principal = findViewById(R.id.Ll_Principal);
         ll_muse = findViewById(R.id.Ll_Muse);
-        usuarioLogeado = Principal.this.getIntent().getExtras().getString("usuario");
-        contrasenaUsuario = Principal.this.getIntent().getExtras().getString("contrasena");
+        usuarioLogeado = sharedPreferences.getString("user", "nadie");
+        contrasenaUsuario = sharedPreferences.getString("password", "nadie");
         Log.i("PrincipalU",usuarioLogeado+" "+contrasenaUsuario);
         //Botones con su Evento//
         Button refreshButton = findViewById(R.id.refresh);
@@ -133,6 +146,8 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         //Agregar actividad//
         ParentActivity parentActivity = new ParentActivity();
         parentActivity.addActiviy(Principal.this);
+
+
     }
 
 
@@ -149,8 +164,6 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
             case R.id.action_perfil:
                 Snackbar.make(ll_principal, "Perfil", Snackbar.LENGTH_LONG).show();
                 Intent intent = new Intent(this, Perfil.class);
-                intent.putExtra("usuario",usuarioLogeado);
-                intent.putExtra("contrasena",contrasenaUsuario);
                 startActivity(intent);
                 break;
             case R.id.action_plus:
@@ -227,6 +240,44 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
                 }
                 break;
         }
+    }
+    private void guardarIdUsuarioPreferences(){
+        final CRestful restful = new CRestful(Principal.this, "consultar", "id_usuarios", "Usuarios", usuarioLogeado, ll_principal);
+        restful.execute();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("idUsuario", restful.getDatoPeticion());
+                editor.apply();
+            }
+        }, 2500);
+
+    }
+    private void guardarTelefonoPreferences(){
+        final CRestful restful = new CRestful(Principal.this, "consultar", "telefono", "Usuarios", usuarioLogeado, ll_principal);
+        restful.execute();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("telefono", restful.getDatoPeticion());
+                editor.apply();
+            }
+        }, 1500);
+    }
+    //Todo: Modificar este metodo, falta recuperar frecuencias//
+    private void guardarFrencuenciasPreferences(){
+        final CRestful restful = new CRestful(Principal.this, "consultar", "telefono", "Usuarios", usuarioLogeado, ll_principal);
+        restful.execute();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("telefono", restful.getDatoPeticion());
+                editor.apply();
+            }
+        }, 1500);
     }
     private void ensurePermissions() {
 

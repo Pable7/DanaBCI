@@ -1,5 +1,6 @@
 package cornejo.luis.bci.Dialogs;
 
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -8,8 +9,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -47,18 +51,26 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Si los datos se suben correctamente, si el metodo Rest devuelve un true//
-                        final CRestful cRestful = new CRestful(context, "insertar", usuarioLogeado, lecturas, 1, linearLayout ); //checar el idAccion//
-                        cRestful.execute();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(cRestful.getInsertado())
-                                    Snackbar.make(linearLayout, "Datos cargados correctamente", Snackbar.LENGTH_LONG).show();
-                                else
-                                    Snackbar.make(linearLayout, "Error al cargador datos\nIntentelo nuevamente", Snackbar.LENGTH_LONG).show();
-                            }
-                        }, 1500);
+                        if(progressBar.getProgress() >=270)
+                        {
+                            int idaccion = 1;//Aquí va el valor que va a controlar en el telefono 1.SubirBrillo 2.BajarBrillo 3.SubirVol 4.BajarVol//
+                            //Si los datos se suben correctamente, si el metodo Rest devuelve un true//
+                            final CRestful cRestful = new CRestful(context, "insertar", usuarioLogeado, lecturas, idaccion, linearLayout );
+                            cRestful.execute();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(cRestful.getInsertado())
+                                        Snackbar.make(linearLayout, "Datos cargados correctamente", Snackbar.LENGTH_LONG).show();
+                                    else
+                                        Snackbar.make(linearLayout, "Error al cargador datos\nIntentelo nuevamente", Snackbar.LENGTH_LONG).show();
+                                }
+                            }, 1500);
+                        }
+                        else
+                        {
+                            Snackbar.make(linearLayoutDatos, "Debe realizar la carga completa antes de enviar", Snackbar.LENGTH_LONG).show();
+                        }
                     }
                 });
         progressBar = view.findViewById(R.id.progressBar);
@@ -70,14 +82,26 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(linearLayoutDatos, "Click", Snackbar.LENGTH_SHORT).show();
-                if(progreso == 90)
+                if(progressBar.getProgress() >= 270)
                 {
-                    avisos.setText("Maximo de datos guardados");
+                    Snackbar.make(linearLayoutDatos, "Maximo de datos guardados", Snackbar.LENGTH_SHORT).show();
+                    //avisos.setText("Maximo de datos guardados");
                 }
                 else
                 {
-                    progressBar.setProgress(progressBar.getProgress() + 10);
+                    ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress",
+                            progressBar.getProgress(), progressBar.getProgress() + 30);
+                    animation.setDuration(500);
+                    animation.start();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            cont++;
+                            textView.setText("Progreso: " + cont + "/9.");
+
+                        }
+                    },500);
+
                 }
                 /*try
                 {

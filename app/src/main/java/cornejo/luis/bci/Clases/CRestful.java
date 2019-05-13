@@ -26,9 +26,9 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     private String HTTP_RESTFUL;
     private String url_p="http://itqisc2019.com/Gatos/";
     private Context context;
-    private String info, nombre, password, dato, tabla, condicion, datoPeticion, valor;
+    private String info, nombre, password, dato, tabla, condicion, datoPeticion, valor, accion;
     private boolean login, actualizado, insertado;
-    private double[] frecuencias;
+    private double[] frecuencias, frecuenciasAccion;
     private int idAccion;
     private LinearLayout linearLayout;
 
@@ -42,7 +42,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
-    //Contructor para guardar las frecuencias//
+    //Contructor para guardar las frecuencias (Insertar)//
     public CRestful(Context context, String info, String nombre, double[] frecuencias, int idAccion, LinearLayout linearLayout){
         this.context = context;
         this.info = info;
@@ -54,14 +54,28 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
-    //Constructor para recolectar un dato//
-    public CRestful(Context context, String info, String dato, String tabla, String condicion)
+    //Constructor para consultar un dato//
+    //Ej). SELECT 'dato'=id_usuarios FROM 'tabla'=Usuarios WHERE 'condicion'= nombre='luis'//
+    public CRestful(Context context, String info, String dato, String tabla, String condicion, LinearLayout linearLayout)
     {
         this.context = context;
         this.info = info;
         this.dato = dato;
         this.tabla = tabla;
         this.condicion = condicion;
+        HTTP_RESTFUL = getURL(info);
+        this.linearLayout = linearLayout;
+        Log.d("url","url:"+HTTP_RESTFUL);
+    }
+    //Constructor para consultar un los datos(frecuencias) de las acciones//
+    public CRestful(String info, String accion, String tabla, String condicion, Context context, LinearLayout linearLayout)
+    {
+        this.context = context;
+        this.info = info;
+        this.accion = accion;
+        this.tabla = tabla;
+        this.condicion = condicion;
+        this.linearLayout = linearLayout;
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
@@ -88,6 +102,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                     frecuencias[1]+"&dato3="+frecuencias[2]+"&idaccion="+idAccion;
             case "consultar": return url_p+"control.php?action=consultar&dato="+dato+"&condicion="+condicion+"&tabla="+tabla;
             case "actualizar": return url_p+"control.php?action=actualizar&dato="+dato+"&condicion="+condicion+"&tabla="+tabla+"&valor="+valor;
+            case "consultarDatos": return url_p+"control.php?action=consultarDatos&tabla="+tabla+"&condicion="+condicion+"&acc="+accion;
             default: return url_p+"control_p.php?action=error";// checar este metodo
         }
     }
@@ -155,6 +170,13 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                             list3[0][0] =  status;
                             list3[0][1] = row.getString("respuesta");
                             this.datoPeticion = list3[0][1];
+                            break;
+                        case "consultarDatos":
+                            //Checar//
+                            list3[0][0] =  status;
+                            list3[0][1] = row.getString("respuesta");
+                            if(!list3[0][1].toString().equals("nada"))
+                                codificarFrecuencias(list3[0][1]);
                             break;
                         case "actualizar":
                             list3[0][0] =  status;
@@ -246,6 +268,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                     case "login": break;
                     case "consultar": break;
                     case "insertar": break;
+                    case "consultarDatos": break;
                     case "actualizar": mensajeSnack(linearLayout, "Fallo al actualizar, compruebe sus datos");
                         break;
                 }
@@ -263,8 +286,14 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     }
     public boolean getLogin() {
         return this.login;
+    } //Para el login//
+    public String getDatoPeticion() { return  this.datoPeticion; } //El dato que regresa la petición//
+    public boolean getInsertado() { return this.insertado; }//Para el insertado//
+    public boolean getActualizado() { return  this.actualizado; }//Para el actualizado//
+    private void codificarFrecuencias(String datos){
+        Log.i("datos", datos);
     }
-    public String getDatoPeticion() { return  this.datoPeticion; }
-    public boolean getInsertado() { return this.insertado; }
-    public boolean getActualizado() { return  this.actualizado; }
+    private double[] getFrecuencias(){
+        return this.frecuenciasAccion;
+    }
 }

@@ -3,6 +3,7 @@ package cornejo.luis.bci.Activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cornejo.luis.bci.Clases.ParentActivity;
 import cornejo.luis.bci.Dialogs.DialogMenuCambioContrasena;
@@ -22,24 +24,25 @@ import cornejo.luis.bci.R;
 
 public class Perfil extends AppCompatActivity implements View.OnClickListener {
 
+    private SharedPreferences sharedPreferences;
     private TextView userName,
             completeUserName,
             titlePlace,
             place,
             pass,
-            titlePass;
+            titlePass,
+            telefono;
     private LinearLayout contrasena,
             Ll_Perfil;
     private ImageView userImage;
     private int offset = 25;
     private Context context;
-    private  String usuarioLogeado, contrasenaUsuario;
+    private  String usuarioLogeado, contrasenaUsuario, telefonoUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
-
 
         Toolbar toolbar = findViewById(R.id.toolbarPerfil);
         setSupportActionBar(toolbar);
@@ -66,10 +69,10 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                sharedPreferences.edit().clear().apply();
                                 Intent intent = new Intent(getApplicationContext(), LogoInicio.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
-                                //Un finish que cierre completamente la app
-                                finish();
                             }
                         })
                         .setNegativeButton("Cancelar", null)
@@ -82,8 +85,12 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
 
     public void initComponents()
     {
-        usuarioLogeado = getIntent().getExtras().getString("usuario");
-        contrasenaUsuario = getIntent().getExtras().getString("contrasena");
+        //Obteniendo datos de Usuarios de la BD//
+        sharedPreferences = getSharedPreferences("Datos", Context.MODE_PRIVATE);
+        usuarioLogeado = sharedPreferences.getString("user", "");
+        contrasenaUsuario = sharedPreferences.getString("password", "");
+        telefonoUsuario = sharedPreferences.getString("telefono","");
+        //Inicializar Objetos
         completeUserName = findViewById(R.id.profileUsername);
         userName = findViewById(R.id.profileAlias);
         userImage = findViewById(R.id.profileImage);
@@ -94,10 +101,13 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
         contrasena = findViewById(R.id.campo_password);
         contrasena.setOnClickListener(this);
         Ll_Perfil = findViewById(R.id.container_perfil);
+        telefono = findViewById(R.id.profilePhone);
 
         context = Perfil.this;
 
+        //Agregar datos a las etiquetas correspondientes//
         userName.setText(usuarioLogeado);
+        telefono.setText(sharedPreferences.getString("telefono",""));
         //Agregar Activiy//
         ParentActivity parentActivity = new ParentActivity();
         parentActivity.addActiviy(Perfil.this);

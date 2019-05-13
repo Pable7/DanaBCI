@@ -1,7 +1,9 @@
 package cornejo.luis.bci.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,7 @@ public class LogoInicio extends AppCompatActivity{
     private int offset = 75;
     private CRestful restful;
     private boolean login;
+    private SharedPreferences sharedPreferences;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo_inicio);
@@ -86,6 +89,7 @@ public class LogoInicio extends AppCompatActivity{
 
     public void initComponents()
     {
+        sharedPreferences = getSharedPreferences("Datos", Context.MODE_PRIVATE);
         progressBarSplash =  findViewById(R.id.Progress_splash);
         buttonConnection =  findViewById(R.id.Btn_IniciarSesion2);
         Txt_User =  findViewById(R.id.Txt_Usuario2);
@@ -152,9 +156,10 @@ public class LogoInicio extends AppCompatActivity{
                 if (login)
                 {
                     Intent intent =  new Intent(LogoInicio.this, Principal.class);
-                    Log.i("Inicio",Txt_User.getText().toString());
-                    intent.putExtra("usuario",Txt_User.getText().toString());
-                    intent.putExtra("contrasena",Txt_Password.getText().toString());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("user",Txt_User.getText().toString());
+                    editor.putString("password",Txt_Password.getText().toString());
+                    editor.apply();
                     startActivity(intent);
                     finish();
                 }
