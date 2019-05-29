@@ -26,16 +26,16 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     private String HTTP_RESTFUL;
     private String url_p="http://itqisc2019.com/Gatos/";
     private Context context;
-    private String info, nombre, password, dato, tabla, condicion, datoPeticion, valor, accion;
-    private boolean login, actualizado, insertado;
+    private String info, nombre, password, dato, tabla, condicion, datoPeticion, valor, accion, registroRespuesta;
+    private boolean login, actualizado, insertado, respuesta;
     private double[] frecuencias, frecuenciasAccion;
-    private int idAccion;
+    private int idAccion, idUsuario;
     private LinearLayout linearLayout;
 
     //Constructor para logearse//
     public CRestful(LinearLayout linearLayout, String info, String nombre, String password) {
         this.linearLayout = linearLayout;
-        this.info = info;
+        this.info = info; //login//
         this.nombre = nombre;
         this.password = password;
         this.login = false;
@@ -45,7 +45,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     //Contructor para guardar las frecuencias (Insertar)//
     public CRestful(Context context, String info, String nombre, double[] frecuencias, int idAccion, LinearLayout linearLayout){
         this.context = context;
-        this.info = info;
+        this.info = info; //insertar//
         this.nombre =  nombre;
         this.frecuencias =  frecuencias;
         this.idAccion = idAccion;
@@ -59,24 +59,12 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     public CRestful(Context context, String info, String dato, String tabla, String condicion, LinearLayout linearLayout)
     {
         this.context = context;
-        this.info = info;
+        this.info = info; //consultar//
         this.dato = dato;
         this.tabla = tabla;
         this.condicion = condicion;
         HTTP_RESTFUL = getURL(info);
         this.linearLayout = linearLayout;
-        Log.d("url","url:"+HTTP_RESTFUL);
-    }
-    //Constructor para consultar un los datos(frecuencias) de las acciones//
-    public CRestful(String info, String accion, String tabla, String condicion, Context context, LinearLayout linearLayout)
-    {
-        this.context = context;
-        this.info = info;
-        this.accion = accion;
-        this.tabla = tabla;
-        this.condicion = condicion;
-        this.linearLayout = linearLayout;
-        HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
     //Constructor para actualizarse//
@@ -92,6 +80,15 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         HTTP_RESTFUL = getURL(info);
         Log.d("url","url:"+HTTP_RESTFUL);
     }
+    //Constructor para consultar los datos(frecuencias) de las acciones por ID//
+    public CRestful(String info, int idUsuario, LinearLayout linearLayout)
+    {
+        this.info = info; //consultarDatos//
+        this.idUsuario = idUsuario;
+        this.linearLayout = linearLayout;
+        HTTP_RESTFUL = getURL(info);
+        Log.d("url","url:"+HTTP_RESTFUL);
+    }
 
     public String getURL(String info)
     {
@@ -102,8 +99,8 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                     frecuencias[1]+"&dato3="+frecuencias[2]+"&idaccion="+idAccion;
             case "consultar": return url_p+"control.php?action=consultar&dato="+dato+"&condicion="+condicion+"&tabla="+tabla;
             case "actualizar": return url_p+"control.php?action=actualizar&dato="+dato+"&condicion="+condicion+"&tabla="+tabla+"&valor="+valor;
-            case "consultarDatos": return url_p+"control.php?action=consultarDatos&tabla="+tabla+"&condicion="+condicion+"&acc="+accion;
-            default: return url_p+"control_p.php?action=error";// checar este metodo
+            case "consultarDatos": return url_p+"control.php?action=consultarDatos&id_usuario="+idUsuario;
+            default: return url_p+"control_p.php?action=error";// ToDo: checar esta Url en el php//
         }
     }
 
@@ -143,7 +140,6 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
             JSONObject object = new JSONObject(jsnres);
             //obtiene el status
             String status = object.getString("status");
-            Log.i("status, object lenght",status+" "+String.valueOf(object.length()));
             if( status.equals("50") )           //50 -> todo esta bien
             {
                 //extrae los registros
@@ -159,8 +155,6 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                         case "login":
                             list3[0][0]= status;
                             list3[0][1]=row.getString("respuesta");
-                            Log.d("getRestful","res:"+list3[0][0].toString());
-                            Log.d("getRestful","res:"+list3[0][1].toString());
                             if (list3[0][1].toString().equals("ok"))
                             {
                                 this.login = true;
@@ -171,13 +165,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                             list3[0][1] = row.getString("respuesta");
                             this.datoPeticion = list3[0][1];
                             break;
-                        case "consultarDatos":
-                            //Checar//
-                            list3[0][0] =  status;
-                            list3[0][1] = row.getString("respuesta");
-                            if(!list3[0][1].toString().equals("nada"))
-                                codificarFrecuencias(list3[0][1]);
-                            break;
+
                         case "actualizar":
                             list3[0][0] =  status;
                             list3[0][1] = row.getString("respuesta");
@@ -194,8 +182,11 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
                             {
                                 this.insertado = true;
                                 mensajeSnack(linearLayout, "Datos insertados correctamente");
-                                //Implentar SnackBar
                             }
+                            break;
+                        case "consultarDatos":
+                            list3[0][0] =  status;
+                            this.registroRespuesta = list3[0][1];
                             break;
                     }
                 }
@@ -247,17 +238,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         Log.d("onPostExecute","res:"+resul[0][0].toString());
         if (resul[0][0].equals("50"))
         {
-            switch (this.info)
-            {
-                case "login":
-                    if(resul[0][1].toString().equals("ok"))
-                    {
-                        //mensajes(context,"Bienvenido");
-                    }
-                    else
-                        //mensajes(context, "Verifica tus datos");
-                    break;
-            }
+            //pass//
         }
         else
         {
@@ -278,7 +259,7 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
         }
     }
 
-    public void mensajes (Context context, String mensaje) {
+    public void mensajesToast (Context context, String mensaje) {
         Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show();
     }
     public void mensajeSnack(LinearLayout linearLayout, String mensaje){
@@ -287,13 +268,8 @@ public class CRestful extends AsyncTask<Void,Void,String[][]> {
     public boolean getLogin() {
         return this.login;
     } //Para el login//
-    public String getDatoPeticion() { return  this.datoPeticion; } //El dato que regresa la petición//
     public boolean getInsertado() { return this.insertado; }//Para el insertado//
     public boolean getActualizado() { return  this.actualizado; }//Para el actualizado//
-    private void codificarFrecuencias(String datos){
-        Log.i("datos", datos);
-    }
-    private double[] getFrecuencias(){
-        return this.frecuenciasAccion;
-    }
+    public String getDatoPeticion() { return  this.datoPeticion; } //El dato que regresa la petición//
+    public String getRegistrosRespuesta() { return this.registroRespuesta; } //Los registros de las acciones//
 }

@@ -50,6 +50,8 @@ import com.choosemuse.libmuse.MuseListener;
 import com.choosemuse.libmuse.MuseVersion;
 import com.choosemuse.libmuse.Result;
 import com.choosemuse.libmuse.ResultLevel;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -57,6 +59,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import cornejo.luis.bci.Clases.CRestful;
+import cornejo.luis.bci.Clases.DeserializarJson.Registro;
 import cornejo.luis.bci.Clases.ParentActivity;
 import cornejo.luis.bci.Dialogs.DialogCargaDatos;
 import cornejo.luis.bci.Dialogs.DialogControlValores;
@@ -70,7 +73,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
     //Layout Principal//
     private LinearLayout ll_principal, ll_muse;
     //Para saber quien esta loggeado//
-    private String usuarioLogeado, contrasenaUsuario;
+    private String usuarioLogeado, contrasenaUsuario, jsonAux = "";
     //Para el Log//
     private final String TAG = "TestLibMuseAndroid";
     //Para el fucionamiento de la diadema//
@@ -163,19 +166,20 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         switch (item.getItemId()){
             case R.id.action_perfil:
                 Snackbar.make(ll_principal, "Perfil", Snackbar.LENGTH_LONG).show();
-                Intent intent = new Intent(this, Perfil.class);
+                Intent intent = new Intent(Principal.this, Perfil.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.zoom_fowar_in, R.anim.zoom_foward_out);
                 break;
             case R.id.action_plus:
                 Snackbar.make(ll_principal, "Agregar", Snackbar.LENGTH_LONG).show();
                 DialogCargaDatos dialogCargaDatos = new DialogCargaDatos();
-                dialogCargaDatos.getContent(this, ll_principal, usuarioLogeado);
+                dialogCargaDatos.getContent(Principal.this, ll_principal, usuarioLogeado);
                 dialogCargaDatos.show(getSupportFragmentManager(), "Carga datos");
                 break;
             case R.id.action_valores:
                 Snackbar.make(ll_principal, "Valores", Snackbar.LENGTH_LONG).show();
                 DialogControlValores dialogControlValores = new DialogControlValores();
-                dialogControlValores.getContent(this, ll_principal);
+                dialogControlValores.getContent(Principal.this, ll_principal);
                 dialogControlValores.show(getSupportFragmentManager(), "Control valores");
         }
         return super.onOptionsItemSelected(item);
@@ -266,18 +270,22 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
             }
         }, 1500);
     }
-    //Todo: Modificar este metodo, falta recuperar frecuencias//
     private void guardarFrencuenciasPreferences(){
-        final CRestful restful = new CRestful(Principal.this, "consultar", "telefono", "Usuarios", usuarioLogeado, ll_principal);
+        final CRestful restful = new CRestful("consultarDatos", 1, ll_principal);
         restful.execute();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("telefono", restful.getDatoPeticion());
+                //Banderas en False por si no tiene registros, cambian a true si los hay//
+                editor.putBoolean("FlagBB", false); //Bandera para bajar brillo//
+                editor.putBoolean("FlagSB", false); //Bandera para subir brillo//
+                editor.putBoolean("FlagBV", false); //Bandera para bajar volumen//
+                editor.putBoolean("FlagSV", false); //Bandera para subir volumen//
                 editor.apply();
+                deserializarJson(restful.getRegistrosRespuesta());
             }
-        }, 1500);
+        }, 3500);
     }
     private void ensurePermissions() {
 
@@ -517,6 +525,52 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
             }
             res = fileReader.gotoNextMessage();
         }
+    }
+    private  void deserializarJson(String json){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Log.i("respuesta", json);
+        for (int i = 1; i < json.length() -1 ; i++)
+        {
+            jsonAux = jsonAux + json.charAt(i);
+        }
+        Log.i("dato", json + " " +json.length());
+        jsonAux = jsonAux.replace("},", "};");
+        String [] arreglo = json.split(";");
+        for (int i = 0; i <arreglo.length ; i++) {
+            Gson gson = new GsonBuilder().create();
+            Registro registro = gson.fromJson(arreglo[i], Registro.class);
+            String accion = registro.getRespuesta().getId_accion();
+            float frecuencia = (Float.parseFloat(registro.getRespuesta().getDato1()) + Float.parseFloat(registro.getRespuesta().getDato2()) + Float.parseFloat(registro.getRespuesta().getDato3())) / 3;
+            if( accion.equals("1"))
+            {
+                //Bandera para subir brillo//
+                editor.putBoolean("FlagSB", true);
+                editor.putFloat("accionSB", frecuencia);
+            }
+            else if(accion.equals("2"))
+            {
+                //Bandera para bajar brillo//
+                editor.putBoolean("FlagBB", true);
+                editor.putFloat("accionBB", frecuencia);
+
+            }
+            else if(accion.equals("3"))
+            {
+                //Bandera para bajar brillo//
+                editor.putBoolean("FlagSV", true);
+                editor.putFloat("accionSV", frecuencia);
+
+            }
+            else if(accion.equals("4"))
+            {
+                //Bandera para bajar brillo//
+                editor.putBoolean("FlagBV", true);
+                editor.putFloat("accionBV", frecuencia);
+
+            }
+
+        }
+
     }
 }
 

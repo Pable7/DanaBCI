@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -101,6 +102,9 @@ public class LogoInicio extends AppCompatActivity{
 
         ParentActivity parentActivity = new ParentActivity();
         parentActivity.addActiviy(LogoInicio.this);
+
+
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
     }
     public void initAnimation()
     {

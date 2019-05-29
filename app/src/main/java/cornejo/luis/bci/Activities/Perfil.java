@@ -158,4 +158,10 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.zoom_fowar_in, R.anim.zoom_foward_out);
+    }
 }

@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
@@ -59,11 +60,52 @@ public class DialogControlValores extends AppCompatDialogFragment {
 
             }
         });
+        final AlertDialog dlg = builder.show();
+        final WindowManager.LayoutParams layoutParams = dlg.getWindow().getAttributes();
         brillo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-
+                if(progress <= 10)
+                {
+                    layoutParams.screenBrightness = 0.1f;
+                }
+                else if(progress <= 20)
+                {
+                    layoutParams.screenBrightness = 0.2f;
+                }
+                else if(progress <= 30)
+                {
+                    layoutParams.screenBrightness = 0.3f;
+                }
+                else if(progress <= 40)
+                {
+                    layoutParams.screenBrightness = 0.4f;
+                }
+                else if(progress <= 50)
+                {
+                    layoutParams.screenBrightness = 0.5f;
+                }
+                else if(progress <= 60)
+                {
+                    layoutParams.screenBrightness = 0.6f;
+                }
+                else if(progress <= 70)
+                {
+                    layoutParams.screenBrightness = 0.7f;
+                }
+                else if(progress <= 80)
+                {
+                    layoutParams.screenBrightness = 0.8f;
+                }
+                else if(progress <= 90)
+                {
+                    layoutParams.screenBrightness = 0.9f;
+                }
+                else if(progress <= 100)
+                {
+                    layoutParams.screenBrightness = 1.0f;
+                }
+                dlg.getWindow().setAttributes(layoutParams);
             }
 
             @Override
