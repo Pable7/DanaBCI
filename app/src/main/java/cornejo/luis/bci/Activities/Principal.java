@@ -109,7 +109,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         //Obtener Telefono//
         guardarTelefonoPreferences();
         //Obtener Frecuencias//
-        guardarFrencuenciasPreferences();
+        //guardarFrencuenciasPreferences();
 
         manager = MuseManagerAndroid.getInstance();
         manager.setContext(this);
@@ -178,9 +178,12 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
                 break;
             case R.id.action_valores:
                 Snackbar.make(ll_principal, "Valores", Snackbar.LENGTH_LONG).show();
-                DialogControlValores dialogControlValores = new DialogControlValores();
+                /*DialogControlValores dialogControlValores = new DialogControlValores();
                 dialogControlValores.getContent(Principal.this, ll_principal);
-                dialogControlValores.show(getSupportFragmentManager(), "Control valores");
+                dialogControlValores.show(getSupportFragmentManager(), "Control valores");*/
+                Intent intentValores = new Intent(Principal.this, ControlValores.class);
+                startActivity(intentValores);
+                overridePendingTransition(R.anim.zoom_fowar_in, R.anim.zoom_foward_out);
         }
         return super.onOptionsItemSelected(item);
     }

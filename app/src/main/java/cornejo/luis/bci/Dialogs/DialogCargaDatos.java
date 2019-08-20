@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 import cornejo.luis.bci.Clases.CRestful;
 import cornejo.luis.bci.R;
 
@@ -90,7 +92,7 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
                 else
                 {
                     ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress",
-                            progressBar.getProgress(), progressBar.getProgress() + 30);
+                            progressBar.getProgress(), progressBar.getProgress() + 31);
                     animation.setDuration(500);
                     animation.start();
                     new Handler().postDelayed(new Runnable() {

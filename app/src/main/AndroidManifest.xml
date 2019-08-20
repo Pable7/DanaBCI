@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.Principal"></activity>
+        <activity android:name=".Activities.ControlValores"></activity>
+        <activity android:name=".Activities.Principal" />
         <activity
             android:name=".Activities.LogoInicio"
             android:screenOrientation="portrait"

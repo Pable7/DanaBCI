@@ -48,6 +48,13 @@
 
     </LinearLayout>
 
+    <Spinner
+        android:layout_marginTop="10dp"
+        android:id="@+id/Spinner_tipoValor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:elevation="10dp"></Spinner>
+
     <TextView
         android:id="@+id/Jbl_Aviso"
         android:textAlignment="center"

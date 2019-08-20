@@ -1,50 +1,48 @@
-package cornejo.luis.bci.Dialogs;
+package cornejo.luis.bci.Activities;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatDialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
 
 import cornejo.luis.bci.R;
 
-public class DialogControlValores extends AppCompatDialogFragment {
+public class ControlValores extends AppCompatActivity {
 
     private SeekBar volumen, brillo;
-    private Context context;
-    private LinearLayout linearLayout, linearLayoutDialog;
+    private LinearLayout linearLayoutValores;
     private AudioManager audioManager;
+    private ArrayList<String> tipoValores;
+    private String[] valores = {"Control Subir Brillo", "Control Bajar Brillo", "Control Subir Volumen", "Control Bajar Volumen"};
+    private Spinner spinner;
 
-    public void getContent(Context context, LinearLayout linearLayout)
-    {
-        Snackbar.make(linearLayout, "Control de Acciones", Snackbar.LENGTH_LONG).show();
-        this.context = context;
-        this.linearLayout = linearLayout;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_control_valores);
 
-    }
-    public Dialog onCreateDialog(Bundle savedInstanceState)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.dialog_control_valores, null);
-        builder.setView(view)
-                .setTitle("Control de valores")
-                .setPositiveButton("Aceptar", null);
+        tipoValores.add("Control Subir Brillo");
+        tipoValores.add("Control Subir Volumen");
+        tipoValores.add("Control Bajar Brillo");
+        tipoValores.add("Control Bajar Volumen");
 
+        spinner = findViewById(R.id.Spinner_tipoValor);
+        ArrayAdapter<String> adapter = ArrayAdapter.createFromResource(ControlValores.this, ,
+        valores);
+        spinner.setAdapter(adapter);
 
-
-        volumen = view.findViewById(R.id.SkBr_Volumen);
-        brillo =  view.findViewById(R.id.SkBr_Brillo);
-        linearLayoutDialog = view.findViewById(R.id.Ll_Control);
-        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        volumen = findViewById(R.id.SkBr_Volumen);
+        brillo =  findViewById(R.id.SkBr_Brillo);
+        linearLayoutValores = findViewById(R.id.Ll_Control);
+        audioManager = (AudioManager) ControlValores.this.getSystemService(Context.AUDIO_SERVICE);
         volumen.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         volumen.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
         volumen.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -63,8 +61,7 @@ public class DialogControlValores extends AppCompatDialogFragment {
 
             }
         });
-        /*final AlertDialog dlg = builder.show();
-        final WindowManager.LayoutParams layoutParams = dlg.getWindow().getAttributes();
+        final WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
         brillo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -108,7 +105,7 @@ public class DialogControlValores extends AppCompatDialogFragment {
                 {
                     layoutParams.screenBrightness = 1.0f;
                 }
-                dlg.getWindow().setAttributes(layoutParams);
+                getWindow().setAttributes(layoutParams);
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -116,8 +113,13 @@ public class DialogControlValores extends AppCompatDialogFragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
-        });*/
-        return builder.create();
+        });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.zoom_fowar_in, R.anim.zoom_foward_out);
+
+    }
 }
