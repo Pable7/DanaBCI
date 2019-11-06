@@ -24,7 +24,7 @@ import cornejo.luis.bci.Clases.CRestful;
 import cornejo.luis.bci.Clases.ParentActivity;
 import cornejo.luis.bci.R;
 
-public class LogoInicio extends AppCompatActivity{
+public class LogoInicio extends AppCompatActivity implements View.OnClickListener {
 
     private ProgressBar progressBarSplash;
     private Button buttonConnection;
@@ -42,7 +42,8 @@ public class LogoInicio extends AppCompatActivity{
 
         initComponents();
         initAnimation();
-        buttonConnection.setOnTouchListener(new View.OnTouchListener() {
+        initUsuarios();
+        /*buttonConnection.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (v.getId()) {
@@ -66,26 +67,7 @@ public class LogoInicio extends AppCompatActivity{
                 }
                 return false;
             }
-        });
-        buttonConnection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( Txt_User.getText().toString().equals("") || Txt_User.getText().toString() == null)
-                {
-                    Snackbar.make(Ll_Inicio,"Ingrese un dato en usuario", Snackbar.LENGTH_LONG).show();
-                }
-                else if(Txt_Password.getText().toString().equals("") || Txt_Password.getText().toString() == null)
-                {
-                    Snackbar.make(Ll_Inicio,"Ingrese un dato en contraseña", Snackbar.LENGTH_LONG).show();
-                }
-                else
-                {
-                    restful = new CRestful(Ll_Inicio, "login", Txt_User.getText().toString(), Txt_Password.getText().toString());
-                    restful.execute();
-                    LogearseCorrecto();
-                }
-            }
-        });
+        });*/
     }
 
     public void initComponents()
@@ -93,6 +75,7 @@ public class LogoInicio extends AppCompatActivity{
         sharedPreferences = getSharedPreferences("Datos", Context.MODE_PRIVATE);
         progressBarSplash =  findViewById(R.id.Progress_splash);
         buttonConnection =  findViewById(R.id.Btn_IniciarSesion2);
+        buttonConnection.setOnClickListener( this);
         Txt_User =  findViewById(R.id.Txt_Usuario2);
         Txt_Password =  findViewById(R.id.Txt_Contrasena2);
         Jbl_Loading = findViewById(R.id.Jbl_Cargando);
@@ -156,8 +139,10 @@ public class LogoInicio extends AppCompatActivity{
             @Override
             public void run() {
                 progressDialog.dismiss();
-                login =  restful.getLogin();
-                if (login)
+                //login =  restful.getLogin();
+                SharedPreferences preferences = getSharedPreferences( "Users", Context.MODE_PRIVATE);
+                Log.i( "Inicio", preferences.getString("usuario1", "") + " : " + preferences.getString( "password1", ""));
+                if ( preferences.getString("usuario1", "").equals( Txt_User.getText().toString()) && preferences.getString( "password1", "").equals( Txt_Password.getText().toString()))
                 {
                     Intent intent =  new Intent(LogoInicio.this, Principal.class);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -169,12 +154,40 @@ public class LogoInicio extends AppCompatActivity{
                 }
                 else
                 {
-                    Snackbar.make(Ll_Inicio, "Error: Verifique sus datos", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(Ll_Inicio, "Error: Datos no validos, Favor de verificarlos.", Snackbar.LENGTH_LONG).show();
                 }
             }
         }, 1500);
     }
 
-
+    private void initUsuarios(){
+        SharedPreferences preferences = getSharedPreferences( "Users", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putString( "usuario1", "luis");
+        edit.putString( "password1", "1234");
+        edit.commit();
+    }
+    @Override
+    public void onClick(View view) {
+        switch ( view.getId())
+        {
+             case R.id.Btn_IniciarSesion2:
+                    if( Txt_User.getText().toString().equals(""))
+                    {
+                        Snackbar.make(Ll_Inicio,"Ingrese un dato en usuario", Snackbar.LENGTH_LONG).show();
+                    }
+                    else if( Txt_Password.getText().toString().equals(""))
+                    {
+                        Snackbar.make(Ll_Inicio,"Ingrese un dato en contraseña", Snackbar.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        //restful = new CRestful(Ll_Inicio, "login", Txt_User.getText().toString(), Txt_Password.getText().toString());
+                        //restful.execute();
+                        LogearseCorrecto();
+                    }
+                break;
+        }
+    }
 }
 

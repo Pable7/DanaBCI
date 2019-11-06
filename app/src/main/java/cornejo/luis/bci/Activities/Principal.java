@@ -111,8 +111,10 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         //Obtener Frecuencias//
         //guardarFrencuenciasPreferences();
 
+        /*manager = MuseManagerAndroid.getInstance();
+        manager.setContext(this);*/
         manager = MuseManagerAndroid.getInstance();
-        manager.setContext(this);
+        manager.setContext( this);
         Log.i(TAG, "LibMuse version=" + LibmuseVersion.instance().getString());
 
         WeakReference<Principal> weakActivity = new WeakReference<Principal>(Principal.this);
@@ -158,6 +160,11 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_principal, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     @Override

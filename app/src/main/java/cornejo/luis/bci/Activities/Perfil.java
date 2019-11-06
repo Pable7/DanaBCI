@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.PriorityQueue;
+
 import cornejo.luis.bci.Clases.ParentActivity;
 import cornejo.luis.bci.Dialogs.DialogMenuCambioContrasena;
 import cornejo.luis.bci.R;
@@ -78,6 +80,11 @@ public class Perfil extends AppCompatActivity implements View.OnClickListener {
                         .setNegativeButton("Cancelar", null)
                         .create()
                         .show();
+            case android.R.id.home:
+                Intent intent = new Intent( Perfil.this, Principal.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.zoom_fowar_in, R.anim.zoom_foward_out);
                 break;
         }
         return super.onOptionsItemSelected(item);

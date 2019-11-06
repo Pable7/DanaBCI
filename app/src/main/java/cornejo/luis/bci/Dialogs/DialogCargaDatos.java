@@ -14,15 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import cornejo.luis.bci.Activities.ControlValores;
 import cornejo.luis.bci.Clases.CRestful;
 import cornejo.luis.bci.R;
 
@@ -36,6 +39,8 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
     private String usuarioLogeado;
     private Button button;
     private int cont, progreso = 0;
+    private String[] valores = {"Control Subir Brillo", "Control Bajar Brillo", "Control Subir Volumen", "Control Bajar Volumen", "Bloquear Pantalla"};
+    private Spinner spinner;
 
     public void getContent(Context context, LinearLayout linearLayout, String usuarioLogeado){
         this.context = context;
@@ -47,6 +52,11 @@ public class DialogCargaDatos  extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.dialog_carga_datos, null);
+
+        spinner = view.findViewById(R.id.Spinner_tipoValor);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>( context, R.layout.support_simple_spinner_dropdown_item, valores);
+        spinner.setAdapter(adapter);
+
         builder.setView(view)
                 .setTitle("Carga de Datos")
                 .setNegativeButton("Cancelar", null)
