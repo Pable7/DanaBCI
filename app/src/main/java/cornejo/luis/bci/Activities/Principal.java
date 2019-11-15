@@ -1,4 +1,4 @@
-package cornejo.luis.bci;
+package cornejo.luis.bci.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.IntRange;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.choosemuse.libmuse.Accelerometer;
 import com.choosemuse.libmuse.AnnotationData;
@@ -49,9 +47,10 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import cornejo.luis.bci.Clases.Servicio2Plano;
+import cornejo.luis.bci.R;
 
-public class InterfazUsuario extends AppCompatActivity implements View.OnClickListener {
+
+public class Principal extends AppCompatActivity implements View.OnClickListener {
 
 
     /**
@@ -160,8 +159,8 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
 
         Log.i(TAG, "LibMuse version=" + LibmuseVersion.instance().getString());
 
-        WeakReference<InterfazUsuario> weakActivity =
-                new WeakReference<InterfazUsuario>(InterfazUsuario.this);
+        WeakReference<Principal> weakActivity =
+                new WeakReference<Principal>(Principal.this);
         // Register a listener to receive connection state changes.
         connectionListener = new ConnectionListener(weakActivity);
         // Register a listener to receive data from a Muse.
@@ -294,7 +293,7 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which){
                             dialog.dismiss();
-                            ActivityCompat.requestPermissions(InterfazUsuario.this,
+                            ActivityCompat.requestPermissions(Principal.this,
                                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                                     0);
                         }
@@ -668,9 +667,9 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
     // Each of these classes extend from the appropriate listener and contain a weak reference
     // to the activity.  Each class simply forwards the messages it receives back to the Activity.
     class MuseL extends MuseListener {
-        final WeakReference<InterfazUsuario> activityRef;
+        final WeakReference<Principal> activityRef;
 
-        MuseL(final WeakReference<InterfazUsuario> activityRef) {
+        MuseL(final WeakReference<Principal> activityRef) {
             this.activityRef = activityRef;
         }
 
@@ -681,9 +680,9 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
     }
 
     class ConnectionListener extends MuseConnectionListener {
-        final WeakReference<InterfazUsuario> activityRef;
+        final WeakReference<Principal> activityRef;
 
-        ConnectionListener(final WeakReference<InterfazUsuario> activityRef) {
+        ConnectionListener(final WeakReference<Principal> activityRef) {
             this.activityRef = activityRef;
         }
 
@@ -694,9 +693,9 @@ public class InterfazUsuario extends AppCompatActivity implements View.OnClickLi
     }
 
     class DataListener extends MuseDataListener {
-        final WeakReference<InterfazUsuario> activityRef;
+        final WeakReference<Principal> activityRef;
 
-        DataListener(final WeakReference<InterfazUsuario> activityRef) {
+        DataListener(final WeakReference<Principal> activityRef) {
             this.activityRef = activityRef;
         }
 

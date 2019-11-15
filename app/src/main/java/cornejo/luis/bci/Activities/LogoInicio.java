@@ -1,6 +1,9 @@
-package cornejo.luis.bci;
+package cornejo.luis.bci.Activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cornejo.luis.bci.Clases.CRestful;
+import cornejo.luis.bci.R;
+
 
 public class LogoInicio extends AppCompatActivity {
 
@@ -27,8 +31,9 @@ public class LogoInicio extends AppCompatActivity {
     private LinearLayout Ll_Data;
     private Handler handler;
     private int offset = 75;
-    private CRestful restful;
-    private boolean login;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo_inicio);
@@ -63,9 +68,10 @@ public class LogoInicio extends AppCompatActivity {
         buttonConnection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                restful = new CRestful(LogoInicio.this, "login", Txt_User.getText().toString(), Txt_Password.getText().toString());
-                restful.execute();
-                LogearseCorrecto();
+                if( !Txt_User.getText().toString().equals("") && !Txt_Password.getText().toString().equals(""))
+                    LogearseCorrecto();
+                else
+                    Toast.makeText( LogoInicio.this, "Usuario o Contraseña vacios, favor de ingresarlos.", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -79,6 +85,11 @@ public class LogoInicio extends AppCompatActivity {
         Jbl_Loading = findViewById(R.id.Jbl_Cargando);
         Ll_Data =  findViewById(R.id.Ll_Datos);
         handler =  new Handler(getApplication().getMainLooper());
+
+        preferences = getSharedPreferences( "Datos", Context.MODE_PRIVATE);
+        editor = preferences.edit();
+        editor.putString( "usuario1", "luis");
+        editor.putString( "password1", "1234");
     }
     public void initAnimation()
     {
@@ -120,18 +131,15 @@ public class LogoInicio extends AppCompatActivity {
 
     private void LogearseCorrecto()
     {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        login =  restful.getLogin();
-        if (login)
+        Log.i( "BCI-DANA", preferences.getString("usuario1", "null").equals(Txt_User.getText().toString()) + "-----" + preferences.getString( "password1", "null").equals(Txt_Password.getText().toString()));
+        if( preferences.getString("usuario1", "").equals(Txt_User.getText().toString()) && preferences.getString( "password1", "").equals(Txt_Password.getText().toString()))
         {
-            Intent intent =  new Intent(LogoInicio.this, InterfazUsuario.class);
+            Intent intent =  new Intent(LogoInicio.this, Principal.class);
             startActivity(intent);
             finish();
         }
+        else
+            Toast.makeText( LogoInicio.this, "Usuario o Contraseña incorrectos", Toast.LENGTH_LONG).show();
     }
 
 
