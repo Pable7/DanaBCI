@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_perfil"
+        android:title="Perfil"
+        android:icon="@drawable/ic_user_white"
+        android:orderInCategory="200"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_plus"
+        android:title="Agregar"
+        android:icon="@drawable/ic_add_white"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_valores"
+        android:title="Controles"
+        android:icon="@drawable/ic_brightness_white"
+        android:orderInCategory="150"
+        app:showAsAction="always">
+    </item>
+</menu>

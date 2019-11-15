@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_perfil"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@color/colorBlanco"
+    android:animateLayoutChanges="true"
+    tools:context=".bci.Activities.PerfilU">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlanco"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        >
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:src="@drawable/ic_imagen_perfil" />
+
+        <TextView
+            android:id="@+id/profileUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:text="Datos Usuario"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/profileAlias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30sp"
+            android:text="Alias"
+            android:textColor="@color/colorGris"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30sp"
+            android:background="@color/colorGrisOscuro"
+            android:paddingTop="1sp"
+            android:paddingBottom="1sp">
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/titleProfilePlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5sp"
+            android:text="Lugar De Trabajo"
+            android:textColor="@color/colorGris"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/profilePlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:drawableLeft="@drawable/ic_trabajo_perfil"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:drawablePadding="15sp"
+            android:text="Instituto Tecnologico de Qro."
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/campo_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="30sp"
+            android:paddingEnd="30sp"
+            android:gravity="center_horizontal"
+            android:focusable="true"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/titleProfilePass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp"
+                android:text="Contraseña"
+                android:textColor="@color/colorGris"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/profilePass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"
+                android:drawableLeft="@drawable/ic_contrasena_perfil"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:drawablePadding="15sp"
+                android:text="*********"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/titleProfilePhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5sp"
+            android:text="Teléfono"
+            android:textColor="@color/colorGris"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/profilePhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:drawableLeft="@drawable/ic_local_phone"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:drawablePadding="15sp"
+            android:text="4422456565"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

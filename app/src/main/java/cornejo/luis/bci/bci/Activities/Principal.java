@@ -1,21 +1,28 @@
-package cornejo.luis.bci.Activities;
+package cornejo.luis.bci.bci.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -48,11 +55,16 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import cornejo.luis.bci.R;
+import cornejo.luis.bci.bci.Clases.ParentActivity;
+import cornejo.luis.bci.bci.Dialogs.CargaDatos;
 
 
 public class Principal extends AppCompatActivity implements View.OnClickListener {
 
-
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private String usuarioLogeado, contrasenaUsuario;
+    private LinearLayout ll_principal;
     /**
      * Tag used for logging purposes.
      */
@@ -159,6 +171,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
 
         Log.i(TAG, "LibMuse version=" + LibmuseVersion.instance().getString());
 
+
         WeakReference<Principal> weakActivity =
                 new WeakReference<Principal>(Principal.this);
         // Register a listener to receive connection state changes.
@@ -187,7 +200,31 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_perfil:
+                Intent intent = new Intent(Principal.this, PerfilU.class);
+                startActivity(intent);
+                break;
+            case R.id.action_plus:
+                CargaDatos dialogCargaDatos = new CargaDatos();
+                dialogCargaDatos.setContent(Principal.this, ll_principal, usuarioLogeado);
+                dialogCargaDatos.show(getSupportFragmentManager(), "Carga datos");
+                break;
+            case R.id.action_valores:
+                Intent intentValores = new Intent(Principal.this, Valores.class);
+                startActivity(intentValores);
+        }
+        return super.onOptionsItemSelected( item);
+    }
     protected void onPause() {
         super.onPause();
         // It is important to call stopListening when the Activity is paused
@@ -463,10 +500,14 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         disconnectButton.setOnClickListener(this);
         Button pauseButton = findViewById(R.id.pause);
         pauseButton.setOnClickListener(this);
+        ll_principal = findViewById(R.id.Ll_Principal);
 
         spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         Spinner musesSpinner = (Spinner) findViewById(R.id.muses_spinner);
         musesSpinner.setAdapter(spinnerAdapter);
+
+        ParentActivity parentActivity = new ParentActivity();
+        parentActivity.addActiviy(Principal.this);
     }
 
     /**

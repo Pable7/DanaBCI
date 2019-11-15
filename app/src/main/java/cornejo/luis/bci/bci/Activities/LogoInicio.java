@@ -1,6 +1,5 @@
-package cornejo.luis.bci.Activities;
+package cornejo.luis.bci.bci.Activities;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cornejo.luis.bci.R;
+import cornejo.luis.bci.bci.Clases.ParentActivity;
 
 
 public class LogoInicio extends AppCompatActivity {
@@ -90,6 +90,9 @@ public class LogoInicio extends AppCompatActivity {
         editor = preferences.edit();
         editor.putString( "usuario1", "luis");
         editor.putString( "password1", "1234");
+
+        ParentActivity parentActivity = new ParentActivity();
+        parentActivity.addActiviy(LogoInicio.this);
     }
     public void initAnimation()
     {
