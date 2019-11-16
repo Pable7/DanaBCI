@@ -135,14 +135,14 @@ public class LogoInicio extends AppCompatActivity {
     private void LogearseCorrecto()
     {
         Log.i( "BCI-DANA", preferences.getString("usuario1", "null").equals(Txt_User.getText().toString()) + "-----" + preferences.getString( "password1", "null").equals(Txt_Password.getText().toString()));
-        if( preferences.getString("usuario1", "").equals(Txt_User.getText().toString()) && preferences.getString( "password1", "").equals(Txt_Password.getText().toString()))
-        {
+        //if( preferences.getString("usuario1", "").equals(Txt_User.getText().toString()) && preferences.getString( "password1", "").equals(Txt_Password.getText().toString()))
+       // {
             Intent intent =  new Intent(LogoInicio.this, Principal.class);
             startActivity(intent);
             finish();
-        }
-        else
-            Toast.makeText( LogoInicio.this, "Usuario o Contraseña incorrectos", Toast.LENGTH_LONG).show();
+        //}
+        //else
+            //Toast.makeText( LogoInicio.this, "Usuario o Contraseña incorrectos", Toast.LENGTH_LONG).show();
     }
 
 
