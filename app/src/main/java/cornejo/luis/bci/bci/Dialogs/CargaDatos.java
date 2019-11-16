@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cornejo.luis.bci.R;
 
@@ -56,10 +57,12 @@ public class CargaDatos extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if(progressBar.getProgress() >=270)
                         {
+                            Toast.makeText( getContext(), "Guardando...", Toast.LENGTH_LONG).show();
+                            dismiss();
                         }
                         else
                         {
-                            Snackbar.make(linearLayoutDatos, "Debe realizar la carga completa antes de enviar", Snackbar.LENGTH_LONG).show();
+                            Toast.makeText( getContext(), "Debe realizar la carga completa antes de enviar", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -74,22 +77,43 @@ public class CargaDatos extends AppCompatDialogFragment {
             public void onClick(View v) {
                 if(progressBar.getProgress() >= 270)
                 {
-                    Snackbar.make(linearLayoutDatos, "Maximo de datos guardados", Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText( getContext(), "Maximo de datos guardados", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress",
-                            progressBar.getProgress(), progressBar.getProgress() + 31);
-                    animation.setDuration(500);
-                    animation.start();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            cont++;
-                            textView.setText("Progreso: " + cont + "/9.");
-
+                    try
+                    {
+                        for (int i = 0; i < lecturas.length ; i++)
+                        {
+                            if( lecturas[i] ==  0.0)
+                            {
+                                //Hacer que el valor de la diadema sea guardado aquí//
+                                lecturas[i] = 1;
+                                ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress",
+                                        progressBar.getProgress(), progressBar.getProgress() + 31);
+                                animation.setDuration(500);
+                                animation.start();
+                                break;
+                            }
                         }
-                    },500);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                cont = 0;
+                                for (int i = 0 ; i <lecturas.length ; i++) {
+                                    if( lecturas[i] != 0.0)
+                                    {
+                                        cont++;
+                                    }
+                                }
+                                textView.setText("Progreso: " + cont + "/9.");
+                            }
+                        },500);
+                    }
+                    catch (ArrayIndexOutOfBoundsException kiwi)
+                    {
+                        avisos.setText("Maximo de Datos Guardado");
+                    }
 
                 }
                 /*try

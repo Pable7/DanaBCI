@@ -1,12 +1,17 @@
 package cornejo.luis.bci.bci.Activities;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.admin.DevicePolicyManager;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -55,6 +60,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import cornejo.luis.bci.R;
+import cornejo.luis.bci.bci.Clases.Lock;
 import cornejo.luis.bci.bci.Clases.ParentActivity;
 import cornejo.luis.bci.bci.Dialogs.CargaDatos;
 
@@ -65,7 +71,16 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
     private SharedPreferences.Editor editor;
     private String usuarioLogeado, contrasenaUsuario;
     private LinearLayout ll_principal;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor edit;
+    private AudioManager audioManager;
+    private DevicePolicyManager devicePolicyManager;
+    private ActivityManager activityManager;
+    private ComponentName compName;
+    private final int RESULT_ENABLE = 11;
+
     /**
+     *
      * Tag used for logging purposes.
      */
     private final String TAG = "TestLibMuseAndroid";
@@ -508,6 +523,14 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
 
         ParentActivity parentActivity = new ParentActivity();
         parentActivity.addActiviy(Principal.this);
+
+        preferences = getSharedPreferences( "Senales", Context.MODE_PRIVATE);
+        edit = preferences.edit();
+
+
+        devicePolicyManager = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
+        activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        compName = new ComponentName(Principal.this, Lock.class);
     }
 
     /**
@@ -531,7 +554,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
             if (alphaStale) {
                 updateAlpha();
             }
-            handler.postDelayed(tickUi, 1000 / 60);
+            handler.postDelayed(tickUi, 125);
         }
     };
 
@@ -544,8 +567,11 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         TextView acc_y = (TextView)findViewById(R.id.acc_y);
         TextView acc_z = (TextView)findViewById(R.id.acc_z);
         acc_x.setText(String.format("%6.2f", accelBuffer[0]));
+        edit.putFloat( "acel1", (float) accelBuffer[0]);
         acc_y.setText(String.format("%6.2f", accelBuffer[1]));
+        edit.putFloat( "acel2", (float) accelBuffer[1]);
         acc_z.setText(String.format("%6.2f", accelBuffer[2]));
+        edit.putFloat( "acel3", (float) accelBuffer[2]);
     }
 
     private void updateEeg() {
@@ -554,11 +580,41 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         TextView fp2 = (TextView)findViewById(R.id.eeg_af8);
         TextView tp10 = (TextView)findViewById(R.id.eeg_tp10);
         tp9.setText(String.format("%6.2f", eegBuffer[0]));
+        edit.putFloat( "eeg1", (float) eegBuffer[0]);
         fp1.setText(String.format("%6.2f", eegBuffer[1]));
+        bloquearAccion( eegBuffer[1]);
+        edit.putFloat( "eeg1", (float) eegBuffer[1]);
         fp2.setText(String.format("%6.2f", eegBuffer[2]));
+        edit.putFloat( "eeg1", (float) eegBuffer[2]);
         tp10.setText(String.format("%6.2f", eegBuffer[3]));
+        edit.putFloat( "eeg1", (float) eegBuffer[3]);
     }
+    private void bloquearAccion( Double eeg){
+        if( eeg > 1000)
+        {
+            boolean active = devicePolicyManager.isAdminActive(compName);
+            if (active) {
+                devicePolicyManager.lockNow();
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder( Principal.this);
+                builder.setTitle( "Activar permisos")
+                        .setMessage( "Para poder usar el bloqueo de pantalla necesita activar los permisos necesarios. ¿Desea habilitarlos?.")
+                        .setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
+                                Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                                intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, compName);
+                                intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Additional text explaining why we need this permission");
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton( "CANCELAR", null)
+                        .create()
+                        .show();
+            }
+        }
+    }
     private void updateAlpha() {
         TextView elem1 = (TextView)findViewById(R.id.elem1);
         elem1.setText(String.format("%6.2f", alphaBuffer[0]));
