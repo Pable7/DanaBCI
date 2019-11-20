@@ -19,6 +19,11 @@
         android:title="Controles"
         android:icon="@drawable/ic_brightness_white"
         android:orderInCategory="150"
-        app:showAsAction="always">
-    </item>
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_actualizar"
+        android:title="Actualizar"
+        android:icon="@drawable/ic_autorenew"
+        android:orderInCategory="90"
+        app:showAsAction="always"/>
 </menu>

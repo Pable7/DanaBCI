@@ -6,6 +6,7 @@
     <color name="colorGris">#B9B8B8</color>
     <color name="colorGrisOscuro">#8B8B8B</color>
     <color name="colorBlanco">#FFF</color>
+    <color name="colorNegro">#222</color>
     <color name="colorTransparente">#00111111</color>
     <color name="colorDefaultText">#808080</color>
     <color name="colorBlueBar">#6C809A</color>

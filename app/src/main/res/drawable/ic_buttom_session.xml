@@ -4,10 +4,10 @@
         android:state_pressed="true">
         <shape>
             <corners
-                android:bottomLeftRadius="20dp"
-                android:bottomRightRadius="20dp"
-                android:topLeftRadius="20dp"
-                android:topRightRadius="20dp"/>
+                android:bottomLeftRadius="10sp"
+                android:bottomRightRadius="10sp"
+                android:topLeftRadius="10sp"
+                android:topRightRadius="10sp"/>
             <solid
                 android:color="@color/colorPrimaryDark"/>
         </shape>
@@ -15,10 +15,10 @@
     <item>
         <shape>
             <corners
-                android:bottomLeftRadius="20dp"
-                android:bottomRightRadius="20dp"
-                android:topLeftRadius="20dp"
-                android:topRightRadius="20dp"/>
+                android:bottomLeftRadius="10sp"
+                android:bottomRightRadius="10sp"
+                android:topLeftRadius="10sp"
+                android:topRightRadius="10sp"/>
             <solid
                 android:color="@color/colorPrimary"/>
         </shape>

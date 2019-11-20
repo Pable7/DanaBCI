@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -96,6 +96,7 @@
         android:layout_height="wrap_content"
         android:text="Cargando..."
         android:textColor="@color/colorBlanco"
-        android:textSize="23dp"/>
+        android:textAllCaps="true"
+        android:textSize="24sp"/>
 
 </LinearLayout>

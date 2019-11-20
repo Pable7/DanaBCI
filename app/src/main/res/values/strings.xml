@@ -1,23 +1,23 @@
 <resources>
     <string name="app_name">BCI</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="connect">Connect</string>
-    <string name="status">Connection Status:</string>
-    <string name="disconnect">Disconnect</string>
-    <string name="refresh">Refresh</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="connect">Conectar</string>
+    <string name="status">Estado de la Conexión</string>
+    <string name="disconnect">Desconectar</string>
+    <string name="refresh">Actualizar</string>
     <string name="init_val">0.0</string>
-    <string name="eeg">EEG data:</string>
-    <string name="accel">Accelerometer Data:</string>
-    <string name="version">Version:</string>
-    <string name="undefined">unknown</string>
+    <string name="eeg">Lectura EEG</string>
+    <string name="accel">Datos del Acelerómetro</string>
+    <string name="version">Versión</string>
+    <string name="undefined">Desconocida</string>
     <string name="artifacts">Blinks, Jaw: </string>
     <string name="msg_count">Msg number, size: </string>
-    <string name="pause">Pause/Resume</string>
+    <string name="pause">Pausar/Reanudar</string>
     <string name="drop">Drop</string>
-    <string name="muse_elem">Alpha relative:</string>
+    <string name="muse_elem">Alpha Relativo</string>
 
-    <string name="permission_dialog_title">Muse Needs Your Permission</string>
-    <string name="permission_dialog_description">Muse needs a few permissions to work properly. On the next screens, tap "Allow" to proceed. If you deny, Muse will not work properly until you go into your Android settings and allow.</string>
-    <string name="permission_dialog_understand">I Understand</string>
+    <string name="permission_dialog_title">Muse Necesita de tus permisos</string>
+    <string name="permission_dialog_description">Muse necesita algunos permisos para trabajar correctamente. En las siguientes pantallas, acepte para continuar. Si usted deniega los permisos, Muse no trabajará correctamente hasta que usted vayaa los ajustes de la aplicación y los autiroce</string>
+    <string name="permission_dialog_understand">Entendido</string>
+    <string name="dispositivos">Dispositivos</string>
 </resources>

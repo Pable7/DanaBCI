@@ -237,6 +237,11 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
             case R.id.action_valores:
                 Intent intentValores = new Intent(Principal.this, Valores.class);
                 startActivity(intentValores);
+                break;
+            case R.id.action_actualizar:
+                manager.stopListening();
+                manager.startListening();
+                break;
         }
         return super.onOptionsItemSelected( item);
     }
