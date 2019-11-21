@@ -25,9 +25,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -567,6 +569,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         TextView acc_y = (TextView)findViewById(R.id.acc_y);
         TextView acc_z = (TextView)findViewById(R.id.acc_z);
         acc_x.setText(String.format("%6.2f", accelBuffer[0]));
+        subirVolumen(accelBuffer[0]);
         edit.putFloat( "acel1", (float) accelBuffer[0]);
         acc_y.setText(String.format("%6.2f", accelBuffer[1]));
         edit.putFloat( "acel2", (float) accelBuffer[1]);
@@ -582,7 +585,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         tp9.setText(String.format("%6.2f", eegBuffer[0]));
         edit.putFloat( "eeg1", (float) eegBuffer[0]);
         fp1.setText(String.format("%6.2f", eegBuffer[1]));
-        bloquearAccion( eegBuffer[1]);
+//        bloquearAccion( eegBuffer[1]);
         edit.putFloat( "eeg1", (float) eegBuffer[1]);
         fp2.setText(String.format("%6.2f", eegBuffer[2]));
         edit.putFloat( "eeg1", (float) eegBuffer[2]);
@@ -590,7 +593,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         edit.putFloat( "eeg1", (float) eegBuffer[3]);
     }
     private void bloquearAccion( Double eeg){
-        if( eeg > 1000)
+        if( eeg > 1500)
         {
             boolean active = devicePolicyManager.isAdminActive(compName);
             if (active) {
@@ -615,9 +618,48 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
             }
         }
     }
+
+    private void subirBrillo(Double alpha) {
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+
+        if (alpha <= .18) {
+            layoutParams.screenBrightness = 0.1f;
+        } else if (alpha <= .22) {
+            layoutParams.screenBrightness = 0.2f;
+        } else if (alpha <= .32) {
+            layoutParams.screenBrightness = 0.3f;
+        } else if (alpha <= .42) {
+            layoutParams.screenBrightness = 0.4f;
+        } else if (alpha <= .52) {
+            layoutParams.screenBrightness = 0.5f;
+        } else if (alpha <= .62) {
+            layoutParams.screenBrightness = 0.6f;
+        } else if (alpha <= .72) {
+            layoutParams.screenBrightness = 0.7f;
+        } else if (alpha <= .82) {
+            layoutParams.screenBrightness = 0.8f;
+        } else if (alpha <= .92) {
+            layoutParams.screenBrightness = 0.9f;
+        } else if (alpha <= 1) {
+            layoutParams.screenBrightness = 1.0f;
+        } getWindow().setAttributes(layoutParams);
+    }
+    private void subirVolumen(Double accel){
+        AudioManager audioManager = (AudioManager) Principal.this.getSystemService(Context.AUDIO_SERVICE);
+        if(accel > .4){
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 60, 0);
+        } else if (accel > .6) {
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 80, 0);
+        } else if (accel > 1) {
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 100, 0);
+        } else if (accel < 0) {
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 20, 0);
+        }
+    }
     private void updateAlpha() {
         TextView elem1 = (TextView)findViewById(R.id.elem1);
         elem1.setText(String.format("%6.2f", alphaBuffer[0]));
+        subirBrillo(alphaBuffer[0]);
         TextView elem2 = (TextView)findViewById(R.id.elem2);
         elem2.setText(String.format("%6.2f", alphaBuffer[1]));
         TextView elem3 = (TextView)findViewById(R.id.elem3);
