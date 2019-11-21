@@ -1,102 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:animateLayoutChanges="true"
-    android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".bci.Activities.LogoInicio"
-    android:background="@drawable/ic_background_splash">
-
-    <ImageView
-        android:id="@+id/logo_splash"
-        android:layout_width="130dp"
-        android:layout_height="150dp"
-        android:layout_margin="25dp"
-        android:src="@mipmap/ic_launcher"/>
+    tools:context=".bci.Activities.LogoInicio">
 
     <LinearLayout
-        android:id="@+id/Ll_Datos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:visibility="visible">
+        android:gravity="center"
+        android:background="@color/colorBlanco">
 
-        <android.support.design.widget.TextInputLayout
+        <ImageView
+            android:id="@+id/logo_splash"
+            android:layout_width="120sp"
+            android:layout_height="150sp"
+            android:layout_marginBottom="25dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/logodana2"/>
+
+        <LinearLayout
+            android:id="@+id/Ll_Datos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="@color/colorBlanco"
-            android:layout_marginStart="25sp"
-            android:layout_marginEnd="25sp">
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:visibility="visible">
 
-            <EditText
-                android:id="@+id/Txt_Usuario2"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre de Usuario"
-                android:maxLines="1"
-                android:maxLength="15"
-                android:inputType="text"
-                android:layout_margin="12dp"
-                android:textColor="@color/colorBlanco"
-                style="@style/AppTheme.EditText"/>
+                android:layout_marginStart="25sp"
+                android:layout_marginEnd="25sp">
 
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/colorBlanco"
-            android:layout_marginStart="25sp"
-            android:layout_marginEnd="25sp"
-            app:passwordToggleTint="@color/colorBlanco"
-            app:passwordToggleEnabled="true">
+                <EditText
+                    android:id="@+id/Txt_Usuario2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre de Usuario"
+                    android:maxLines="1"
+                    android:maxLength="15"
+                    android:inputType="text"
+                    style="@style/AppTheme.EditText"/>
 
-            <EditText
-                android:id="@+id/Txt_Contrasena2"
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña"
+                android:layout_marginStart="25sp"
+                android:layout_marginEnd="25sp"
+                app:passwordToggleEnabled="true">
+
+                <EditText
+                    android:id="@+id/Txt_Contrasena2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contraseña"
+                    android:maxLines="1"
+                    android:maxLength="15"
+                    android:inputType="textPassword"
+                    style="@style/AppTheme.EditText"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/Btn_IniciarSesion2"
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/colorBlanco"
-                android:maxLines="1"
-                android:maxLength="15"
-                android:layout_margin="12dp"
-                android:inputType="textPassword"
-                style="@style/AppTheme.EditText"/>
+                android:background="@drawable/ic_buttom_session"
+                android:text="Iniciar Sesión"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:layout_marginBottom="10dp"
+                />
 
-        </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/Btn_IniciarSesion2"
-            android:layout_marginTop="25dp"
+        <ProgressBar
+            android:id="@+id/Progress_splash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorBlanco"
-            android:background="@drawable/ic_buttom_session"
-            android:text="Iniciar Sesion"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:layout_marginBottom="10dp"
-            />
+            android:layout_marginTop="20sp"
+            android:theme="@style/AppTheme"/>
+
+        <TextView
+            android:id="@+id/Jbl_Cargando"
+            android:layout_marginTop="5sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cargando..."
+            android:textAllCaps="true"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/Progress_splash"
+    <ImageView
+        android:layout_width="50sp"
+        android:layout_height="200sp"
+        android:layout_gravity="top|end"
+        android:tint="@color/colorAccent"
+        android:contentDescription="@string/undefined"
+        android:src="@drawable/other"/>
+
+    <ImageView
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/undefined"
+        android:src="@drawable/pie"/>
+
+    <ImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_gravity="top|start"
+        android:rotation="180"
+        android:contentDescription="@string/undefined"
+        android:tint="@color/colorPrimaryDark"
+        android:src="@drawable/pie"/>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme"/>
+        android:src="@drawable/circulo"
+        android:contentDescription="@string/undefined"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="120sp"
+        android:layout_marginEnd="100sp"
+        android:tint="@color/colorPrimaryDark"/>
 
-    <TextView
-        android:id="@+id/Jbl_Cargando"
-        android:layout_marginTop="25dp"
+    <ImageView
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:src="@drawable/circulo"
+        android:contentDescription="@string/undefined"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="80sp"
+        android:layout_marginEnd="130sp"
+        android:tint="@color/colorAccent"/>
+
+    <ImageView
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:src="@drawable/circulo"
+        android:contentDescription="@string/undefined"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="30sp"
+        android:layout_marginEnd="60sp"
+        android:tint="@color/colorPrimaryDark"/>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cargando..."
-        android:textColor="@color/colorBlanco"
-        android:textAllCaps="true"
-        android:textSize="24sp"/>
+        android:src="@drawable/circulo"
+        android:contentDescription="@string/undefined"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="90sp"
+        android:layout_marginEnd="68sp"
+        android:tint="@color/colorPrimary"/>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

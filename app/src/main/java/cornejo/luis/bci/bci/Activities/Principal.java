@@ -260,14 +260,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
-        if (v.getId() == R.id.refresh) {
-            // The user has pressed the "Refresh" button.
-            // Start listening for nearby or paired Muse headbands. We call stopListening
-            // first to make sure startListening will clear the list of headbands and start fresh.
-            manager.stopListening();
-            manager.startListening();
-
-        } else if (v.getId() == R.id.connect) {
+        if (v.getId() == R.id.connect) {
 
             // The user has pressed the "Connect" button to connect to
             // the headband in the spinner.
@@ -512,8 +505,6 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
      */
     private void initUI() {
         setContentView(R.layout.activity_interfaz_usuario);
-        Button refreshButton = findViewById(R.id.refresh);
-        refreshButton.setOnClickListener(this);
         Button connectButton = findViewById(R.id.connect);
         connectButton.setOnClickListener(this);
         Button disconnectButton = findViewById(R.id.disconnect);
