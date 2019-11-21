@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/logo_splash"
-            android:layout_width="120sp"
-            android:layout_height="150sp"
+            android:layout_width="100sp"
+            android:layout_height="120sp"
             android:layout_marginBottom="25dp"
             android:scaleType="fitCenter"
             android:contentDescription="@string/app_name"
@@ -29,11 +29,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:layout_marginStart="25sp"
                 android:layout_marginEnd="25sp">
 
@@ -41,16 +43,34 @@
                     android:id="@+id/Txt_Usuario2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:hint="Nombre de Usuario"
                     android:maxLines="1"
                     android:maxLength="15"
-                    android:inputType="text"
-                    style="@style/AppTheme.EditText"/>
+                    android:inputType="text"/>
 
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Nombre de Usuario">
+
+                <EditText
+                    android:id="@+id/username_splash"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:layout_marginStart="25sp"
                 android:layout_marginEnd="25sp"
                 app:passwordToggleEnabled="true">
@@ -59,11 +79,12 @@
                     android:id="@+id/Txt_Contrasena2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:hint="Contraseña"
                     android:maxLines="1"
                     android:maxLength="15"
-                    android:inputType="textPassword"
-                    style="@style/AppTheme.EditText"/>
+                    android:inputType="textPassword"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -82,21 +103,21 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/Jbl_Cargando"
+            android:layout_marginTop="5sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cargando . . ."
+            android:textAllCaps="true"
+            android:textSize="18sp"/>
+
         <ProgressBar
             android:id="@+id/Progress_splash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20sp"
             android:theme="@style/AppTheme"/>
-
-        <TextView
-            android:id="@+id/Jbl_Cargando"
-            android:layout_marginTop="5sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cargando..."
-            android:textAllCaps="true"
-            android:textSize="20sp"/>
 
     </LinearLayout>
 
