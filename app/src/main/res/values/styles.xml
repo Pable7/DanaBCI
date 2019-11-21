@@ -9,7 +9,7 @@
     </style>
 
     <style name="AppTheme.EditText" parent="android:Widget.EditText">
-        <item name="android:colorAccent">@color/colorBlanco</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
