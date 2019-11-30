@@ -23,15 +23,13 @@ import cornejo.luis.bci.bci.Clases.ParentActivity;
 public class PerfilU extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
-    private TextView userName,
-            completeUserName,
+    private TextView completeUserName,
             titlePlace,
             place,
             pass,
             titlePass,
             telefono;
-    private LinearLayout contrasena,
-            Ll_Perfil;
+    private LinearLayout contrasena;
     private ImageView userImage;
     private int offset = 25;
     private Context context;
@@ -42,7 +40,10 @@ public class PerfilU extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_u);
 
+        Toolbar tooblar = findViewById(R.id.toolbar_profile);
+        setSupportActionBar(tooblar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
 
         initComponents();
         initAnimations();
@@ -73,6 +74,7 @@ public class PerfilU extends AppCompatActivity {
                         .setNegativeButton("Cancelar", null)
                         .create()
                         .show();
+                break;
             case android.R.id.home:
                 Intent intent = new Intent( PerfilU.this, Principal.class);
                 startActivity(intent);
@@ -91,30 +93,25 @@ public class PerfilU extends AppCompatActivity {
         telefonoUsuario = sharedPreferences.getString("telefono","");
         //Inicializar Objetos
         completeUserName = findViewById(R.id.profileUsername);
-        userName = findViewById(R.id.profileAlias);
         userImage = findViewById(R.id.profileImage);
         titlePlace = findViewById(R.id.profilePlace);
         place = findViewById(R.id.titleProfilePlace);
         pass = findViewById(R.id.profilePass);
         titlePass = findViewById(R.id.titleProfilePass);
         contrasena = findViewById(R.id.campo_password);
-        Ll_Perfil = findViewById(R.id.container_perfil);
         telefono = findViewById(R.id.profilePhone);
 
         context = PerfilU.this;
 
         //Agregar datos a las etiquetas correspondientes//
-        userName.setText(usuarioLogeado);
         //telefono.setText(sharedPreferences.getString("telefono",""));
         ParentActivity parentActivity = new ParentActivity();
         parentActivity.addActiviy(PerfilU.this);
     }
 
     private void initAnimations(){
-        Ll_Perfil = findViewById(R.id.container_perfil);
 
         completeUserName.setVisibility(View.INVISIBLE);
-        userName.setVisibility(View.INVISIBLE);
         userImage.setVisibility(View.INVISIBLE);
         titlePlace.setVisibility(View.INVISIBLE);
         place.setVisibility(View.INVISIBLE);
@@ -123,8 +120,6 @@ public class PerfilU extends AppCompatActivity {
 
         completeUserName.startAnimation(loadAnimation(true));
         completeUserName.setVisibility(View.VISIBLE);
-        userName.startAnimation(loadAnimation(true));
-        userName.setVisibility(View.VISIBLE);
         userImage.startAnimation(loadAnimation(true));
         userImage.setVisibility(View.VISIBLE);
         titlePlace.startAnimation(loadAnimation(true));

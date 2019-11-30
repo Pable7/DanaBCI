@@ -20,4 +20,6 @@
     <string name="permission_dialog_description">Muse necesita algunos permisos para trabajar correctamente. En las siguientes pantallas, acepte para continuar. Si usted deniega los permisos, Muse no trabajará correctamente hasta que usted vayaa los ajustes de la aplicación y los autiroce</string>
     <string name="permission_dialog_understand">Entendido</string>
     <string name="dispositivos">Dispositivos</string>
+
+    <string name="about">Dana BCI &#174;\n2019</string>
 </resources>

@@ -581,7 +581,7 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
         tp9.setText(String.format("%6.2f", eegBuffer[0]));
         edit.putFloat( "eeg1", (float) eegBuffer[0]);
         fp1.setText(String.format("%6.2f", eegBuffer[1]));
-//        bloquearAccion( eegBuffer[1]);
+        bloquearAccion( eegBuffer[1]);
         edit.putFloat( "eeg1", (float) eegBuffer[1]);
         fp2.setText(String.format("%6.2f", eegBuffer[2]));
         edit.putFloat( "eeg1", (float) eegBuffer[2]);
@@ -648,7 +648,11 @@ public class Principal extends AppCompatActivity implements View.OnClickListener
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 80, 0);
         } else if (accel > 1) {
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 100, 0);
-        } else if (accel < 0) {
+        } else if (-.4 > accel) {
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 60, 0);
+        }else if (-.6 > accel) {
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 40, 0);
+        }else if ( -1 > accel) {
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 20, 0);
         }
     }

@@ -27,7 +27,6 @@ public class LogoInicio extends AppCompatActivity {
     private ProgressBar progressBarSplash;
     private Button buttonConnection;
     private EditText Txt_User, Txt_Password;
-    private TextView Jbl_Loading;
     private LinearLayout Ll_Data;
     private Handler handler;
     private int offset = 75;
@@ -82,7 +81,6 @@ public class LogoInicio extends AppCompatActivity {
         buttonConnection =  findViewById(R.id.Btn_IniciarSesion2);
         Txt_User =  findViewById(R.id.Txt_Usuario2);
         Txt_Password =  findViewById(R.id.Txt_Contrasena2);
-        Jbl_Loading = findViewById(R.id.Jbl_Cargando);
         Ll_Data =  findViewById(R.id.Ll_Datos);
         handler =  new Handler(getApplication().getMainLooper());
 
@@ -117,7 +115,6 @@ public class LogoInicio extends AppCompatActivity {
                 Txt_Password.setVisibility(View.VISIBLE);
                 buttonConnection.startAnimation(loadAnimation());
                 buttonConnection.setVisibility(View.VISIBLE);
-                Jbl_Loading.setVisibility(View.INVISIBLE);
             }
         }, 2500);
 

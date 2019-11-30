@@ -1,80 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/Ll_Control"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingStart="20sp"
+    android:paddingEnd="20sp"
     android:gravity="center"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/Jbl_Brillo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Control Brillo"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center"/>
+
+    <ImageView
+        android:id="@+id/menos_brillo_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Jbl_Brillo"
+        android:src="@drawable/ic_remove"
+        android:contentDescription="@string/init_val"
+        android:layout_margin="10sp"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:id="@+id/mas_brillo_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Jbl_Brillo"
+        android:contentDescription="@string/init_val"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_add"
+        android:tint="@color/colorPrimary"
+        android:layout_margin="10sp"/>
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/SkBr_Brillo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Jbl_Brillo"
+        android:layout_toEndOf="@id/menos_brillo_1"
+        android:layout_toStartOf="@id/mas_brillo_1"
+        android:layout_alignTop="@id/mas_brillo_1"
+        android:layout_alignBottom="@id/mas_brillo_1"
+        android:max="100"/>
+
+    <TextView
+        android:id="@+id/Jbl_Volumen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/SkBr_Brillo"
+        android:layout_marginTop="20sp"
+        android:text="Control Volumen"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center"/>
+
+    <ImageView
+        android:id="@+id/menos_brillo_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Jbl_Volumen"
+        android:src="@drawable/ic_remove"
+        android:contentDescription="@string/init_val"
+        android:layout_margin="10sp"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:id="@+id/mas_brillo_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Jbl_Volumen"
+        android:contentDescription="@string/init_val"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_add"
+        android:tint="@color/colorPrimary"
+        android:layout_margin="10sp"/>
+
+    <SeekBar
+        android:id="@+id/SkBr_Volumen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_below="@id/Jbl_Volumen"
+        android:layout_toEndOf="@id/menos_brillo_2"
+        android:layout_toStartOf="@id/mas_brillo_2"
+        android:layout_alignTop="@id/mas_brillo_2"
+        android:layout_alignBottom="@id/mas_brillo_2" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/Jbl_Brillo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Control Brillo"
-            android:textSize="18dp"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="30px"/>
+    <TextView
+        android:id="@+id/Jbl_bloquear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center"
+        android:layout_below="@id/SkBr_Volumen"
+        android:text="Bloquear Pantalla"
+        android:layout_marginTop="20sp"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"/>
 
-        <android.support.v7.widget.AppCompatSeekBar
-            android:id="@+id/SkBr_Brillo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:max="100"/>
+    <Button
+        android:id="@+id/Btn_Bloquear_Pantalla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="80sp"
+        android:layout_marginEnd="80sp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="Bloquear"
+        android:layout_below="@id/Jbl_bloquear"
+        android:layout_marginTop="10sp"
+        android:background="@drawable/all_corners_round"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:textColor="@color/colorBlanco"/>
 
-        <TextView
-            android:id="@+id/Jbl_Volumen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Control Volumen"
-            android:textSize="18dp"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginBottom="30px"/>
-        <SeekBar
-            android:id="@+id/SkBr_Volumen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:text="Bloquear Pantalla"
-                android:textSize="18dp"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginBottom="10dp"/>
-            <Button
-                android:id="@+id/Btn_Bloquear_Pantalla"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Bloquear"
-                android:layout_marginTop="10sp"
-                android:background="@drawable/all_corners_round"
-                android:paddingLeft="35dp"
-                android:paddingRight="35dp"
-                android:textColor="#FFF"/>
-
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -1,29 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container_perfil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:background="@color/colorBlanco"
-    android:animateLayoutChanges="true"
     tools:context=".bci.Activities.PerfilU">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_profile"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginTop="25sp"/>
+
+    <ImageView
+        android:layout_width="110sp"
+        android:layout_height="180sp"
+        android:src="@drawable/other_4"
+        android:layout_gravity="center_horizontal|top"
+        android:contentDescription="@string/undefined"
+        android:tint="@color/colorAccent"/>
+
+    <ImageView
+        android:layout_width="300sp"
+        android:layout_height="75sp"
+        android:src="@drawable/other_5"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/undefined"
+        android:tint="@color/colorPrimary"/>
+
+    <ImageView
+        android:layout_width="100sp"
+        android:layout_height="50sp"
+        android:src="@drawable/other_2"
+        android:layout_gravity="start|center"
+        android:contentDescription="@string/undefined"
+        android:tint="@color/colorPrimaryDark"/>
+
+    <ImageView
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:src="@drawable/circulo"
+        android:layout_marginStart="45sp"
+        android:layout_marginTop="100sp"
+        android:layout_gravity="start|center"
+        android:contentDescription="@string/undefined"
+        android:tint="@color/colorAccent"/>
+
+    <ImageView
+        android:layout_width="100sp"
+        android:layout_height="70sp"
+        android:src="@drawable/other_3"
+        android:layout_gravity="end|center"
+        android:contentDescription="@string/undefined"
+        android:tint="@color/colorPrimary"/>
+
+    <ImageView
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:src="@drawable/circulo"
+        android:layout_marginEnd="25sp"
+        android:layout_marginBottom="130sp"
+        android:layout_gravity="end|center"
+        android:contentDescription="@string/undefined"
+        android:tint="@color/colorAccent"/>
+
+    <ImageView
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:src="@drawable/circulo"
+        android:layout_marginBottom="80sp"
+        android:layout_marginEnd="50sp"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/undefined"
+        android:tint="@color/colorPrimaryDark"/>
+
+    <ImageView
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:src="@drawable/circulo"
+        android:layout_marginBottom="95sp"
+        android:layout_marginEnd="130sp"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/undefined"
+        android:tint="@color/colorAccent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15sp"
+        android:paddingStart="10sp"
+        android:paddingEnd="25sp"
+        android:textAlignment="center"
+        android:layout_gravity="end|bottom"
+        android:textColor="@color/colorBlanco"
+        android:text="@string/about"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBlanco"
-        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="8dp"
-        >
+        android:gravity="center_horizontal">
 
         <ImageView
             android:id="@+id/profileImage"
             android:layout_width="100sp"
             android:layout_height="100sp"
-            android:src="@drawable/ic_imagen_perfil" />
+            android:src="@drawable/ic_imagen_perfil"
+            android:tint="@color/colorBlanco"
+            android:layout_marginTop="71sp" />
 
         <TextView
             android:id="@+id/profileUsername"
@@ -31,28 +119,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15sp"
             android:text="Datos Usuario"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="30sp"
             android:textSize="22sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/profileAlias"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30sp"
-            android:text="Alias"
-            android:textColor="@color/colorGris"
-            android:textSize="14sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30sp"
-            android:background="@color/colorGrisOscuro"
-            android:paddingTop="1sp"
-            android:paddingBottom="1sp">
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/titleProfilePlace"
@@ -60,7 +130,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5sp"
             android:text="Lugar De Trabajo"
-            android:textColor="@color/colorGris"
+            android:drawableLeft="@drawable/ic_trabajo_perfil"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:drawablePadding="15sp"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
         <TextView
@@ -68,9 +141,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
-            android:drawableLeft="@drawable/ic_trabajo_perfil"
-            android:drawableTint="@color/colorPrimaryDark"
-            android:drawablePadding="15sp"
             android:text="Instituto Tecnologico de Qro."
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -82,6 +152,7 @@
             android:orientation="vertical"
             android:paddingStart="30sp"
             android:paddingEnd="30sp"
+            android:layout_marginBottom="20sp"
             android:gravity="center_horizontal"
             android:focusable="true"
             android:clickable="true"
@@ -93,29 +164,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5sp"
                 android:text="Contraseña"
-                android:textColor="@color/colorGris"
+                android:drawableLeft="@drawable/ic_contrasena_perfil"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:drawablePadding="15sp"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/profilePass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20sp"
-                android:drawableLeft="@drawable/ic_contrasena_perfil"
-                android:drawableTint="@color/colorPrimaryDark"
-                android:drawablePadding="15sp"
                 android:text="*********"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 
         </LinearLayout>
+
         <TextView
             android:id="@+id/titleProfilePhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5sp"
             android:text="Teléfono"
-            android:textColor="@color/colorGris"
+            android:drawableLeft="@drawable/ic_local_phone"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:drawablePadding="15sp"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
         <TextView
@@ -123,11 +197,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
-            android:drawableLeft="@drawable/ic_local_phone"
-            android:drawableTint="@color/colorPrimaryDark"
-            android:drawablePadding="15sp"
             android:text="4422456565"
             android:textSize="18sp"
             android:textStyle="bold" />
+
     </LinearLayout>
-</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

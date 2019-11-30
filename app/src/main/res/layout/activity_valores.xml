@@ -1,21 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:id="@+id/Ll_Valores"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+    <include
+        android:id="@+id/Control"
+        layout="@layout/dialog_control_valores">
+    </include>
 
-        <include
-            android:id="@+id/Control"
-            layout="@layout/dialog_control_valores">
-        </include>
-    </LinearLayout>
+    <ImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_gravity="bottom|end"
+        android:tint="@color/colorPrimaryDark"
+        android:contentDescription="@string/undefined"
+        android:src="@drawable/pie" />
 
+    <ImageView
+        android:layout_width="250sp"
+        android:layout_height="250sp"
+        android:layout_gravity="end|top"
+        android:tint="@color/colorAccent"
+        android:contentDescription="@string/undefined"
+        android:rotation="270"
+        android:src="@drawable/pie" />
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="65sp"
+        android:layout_height="260sp"
+        android:rotation="180"
+        android:tint="@color/colorPrimary"
+        android:layout_gravity="bottom|start"
+        android:contentDescription="@string/undefined"
+        android:src="@drawable/other" />
+
+    <ImageView
+        android:layout_width="65sp"
+        android:layout_height="65sp"
+        android:layout_marginStart="80sp"
+        android:layout_marginBottom="30sp"
+        android:rotation="180"
+        android:tint="@color/colorPrimaryDark"
+        android:layout_gravity="bottom|start"
+        android:contentDescription="@string/undefined"
+        android:src="@drawable/circulo" />
+
+    <ImageView
+        android:layout_width="65sp"
+        android:layout_height="65sp"
+        android:layout_marginEnd="260sp"
+        android:layout_marginTop="30sp"
+        android:rotation="180"
+        android:tint="@color/colorPrimary"
+        android:layout_gravity="top|end"
+        android:contentDescription="@string/undefined"
+        android:src="@drawable/circulo" />
+
+    <ImageView
+        android:layout_width="35sp"
+        android:layout_height="35sp"
+        android:layout_marginEnd="245sp"
+        android:layout_marginTop="120sp"
+        android:rotation="180"
+        android:tint="@color/colorPrimaryDark"
+        android:layout_gravity="top|end"
+        android:contentDescription="@string/undefined"
+        android:src="@drawable/circulo" />
+
+    <ImageView
+        android:layout_width="35sp"
+        android:layout_height="35sp"
+        android:layout_marginStart="95sp"
+        android:layout_marginBottom="120sp"
+        android:rotation="180"
+        android:tint="@color/colorAccent"
+        android:layout_gravity="bottom|start"
+        android:contentDescription="@string/undefined"
+        android:src="@drawable/circulo" />
+
+</android.support.design.widget.CoordinatorLayout>

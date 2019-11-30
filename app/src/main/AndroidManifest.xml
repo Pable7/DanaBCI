@@ -16,9 +16,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".bci.Activities.PerfilU"></activity>
-        <activity android:name=".bci.Activities.Valores" />
-        <activity android:name=".bci.Activities.Principal" />
+        <activity android:name=".bci.Activities.PerfilU"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen"/>
+        <activity android:name=".bci.Activities.Valores"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity android:name=".bci.Activities.Principal"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".bci.Activities.LogoInicio"
             android:screenOrientation="portrait"

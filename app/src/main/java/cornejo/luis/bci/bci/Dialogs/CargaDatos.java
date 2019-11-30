@@ -106,7 +106,7 @@ public class CargaDatos extends AppCompatDialogFragment {
                                         cont++;
                                     }
                                 }
-                                textView.setText("Progreso: " + cont + "/9.");
+                                textView.setText("Progreso: " + cont + "/9");
                             }
                         },500);
                     }
